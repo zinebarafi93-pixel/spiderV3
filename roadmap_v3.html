@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spider Hero: Rope City Wars — Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080910;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-card-h: rgba(255,255,255,0.055);
+  --red: #e8293b;
+  --red-dim: rgba(232,41,59,0.15);
+  --cyan: #00d4ff;
+  --cyan-dim: rgba(0,212,255,0.12);
+  --gold: #f5a623;
+  --gold-dim: rgba(245,166,35,0.12);
+  --green: #22c55e;
+  --green-dim: rgba(34,197,94,0.12);
+  --text: #f0f1f5;
+  --muted: #7b808f;
+  --border: rgba(255,255,255,0.07);
+  --border-h: rgba(255,255,255,0.14);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 80px;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% 10%, rgba(232,41,59,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 85% 85%, rgba(0,212,255,0.05) 0%, transparent 60%);
+}
+/* HEADER */
+.hdr {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 56px 24px 36px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.hdr-left h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #fff;
+  line-height: 1.05;
+}
+.hdr-left h1 span { color: var(--red); }
+.hdr-left p {
+  margin-top: 8px;
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 520px;
+}
+.version-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.v-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  flex-shrink: 0;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+/* STATS */
+.stats {
+  max-width: 1100px;
+  margin: 0 auto 36px;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 14px;
+}
+@media(max-width:720px){.stats{grid-template-columns:1fr 1fr;}}
+.stat-card {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.stat-card:hover { border-color: var(--border-h); }
+.stat-card.wide { display: flex; flex-direction: column; justify-content: space-between; }
+.stat-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.stat-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+}
+.stat-card.wide .stat-val { font-size: 1.5rem; margin-bottom: 14px; }
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--cyan));
+  border-radius: 99px;
+  transition: width 1s cubic-bezier(0.4,0,0.2,1);
+}
+.ai-btn {
+  background: var(--cyan-dim);
+  border: 0.5px solid rgba(0,212,255,0.3);
+  border-radius: 14px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: inherit;
+}
+.ai-btn:hover {
+  background: rgba(0,212,255,0.18);
+  border-color: rgba(0,212,255,0.5);
+}
+.ai-btn .ai-icon { font-size: 1.5rem; margin-bottom: 8px; }
+.ai-btn .ai-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.ai-btn .ai-sub { font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
+
+/* TABS */
+.tabs-outer-container {
+  max-width: 1100px;
+  margin: 0 auto 32px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+.tabs-wrap {
+  flex-grow: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs-wrap::-webkit-scrollbar { display: none; }
+.tabs {
+  display: flex;
+  gap: 8px;
+  width: max-content;
+}
+.scroll-btn {
+  background: rgba(8, 9, 16, 0.85);
+  border: 1px solid rgba(232, 41, 59, 0.45);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  user-select: none;
+  z-index: 5;
+  box-shadow: 0 0 12px rgba(232, 41, 59, 0.2);
+}
+.scroll-btn:hover {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+  box-shadow: 0 0 18px rgba(232, 41, 59, 0.6);
+  transform: scale(1.08);
+}
+.scroll-btn:active {
+  transform: scale(0.95);
+}
+.tab {
+  padding: 9px 18px;
+  border-radius: 99px;
+  border: 0.5px solid var(--border);
+  background: var(--bg-card);
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.18s;
+  font-family: 'DM Sans', sans-serif;
+}
+.tab:hover { color: var(--text); border-color: var(--border-h); }
+.tab.active {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+/* CONTENT */
+.content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.section { display: none; animation: fadeUp 0.3s ease forwards; }
+.section.active { display: block; }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* HISTORY SECTION (completed milestones) */
+.history-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 0.5px solid var(--border);
+}
+.history-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+}
+.history-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: var(--green-dim);
+  border: 0.5px solid rgba(34,197,94,0.3);
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.milestone-group { margin-bottom: 24px; }
+.m-group-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+.m-item {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  transition: all 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+.m-item:hover {
+  background: var(--bg-card-h);
+  border-color: var(--border-h);
+}
+.m-item.done { border-left: 3px solid var(--green); border-radius: 0 12px 12px 0; }
+.m-item.pending { border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0; }
+.m-check {
+  width: 20px; height: 20px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+.m-item.done .m-check { background: var(--green); color: #000; }
+.m-item.pending .m-check { background: var(--gold-dim); border: 1px solid var(--gold); color: var(--gold); }
+.m-body {}
+.m-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 2px;
+}
+.m-item.done .m-name { color: var(--muted); }
+.m-meta {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.m-tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 500;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.tag-done { background: var(--green-dim); color: var(--green); }
+.tag-pending { background: var(--gold-dim); color: var(--gold); }
+
+/* FUTURE SECTIONS */
+.sec-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 0.5px solid var(--border);
+}
+.sec-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+}
+.prio-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.prio-red { background: var(--red-dim); border: 0.5px solid rgba(232,41,59,0.3); color: var(--red); }
+.prio-gold { background: var(--gold-dim); border: 0.5px solid rgba(245,166,35,0.3); color: var(--gold); }
+.prio-cyan { background: var(--cyan-dim); border: 0.5px solid rgba(0,212,255,0.3); color: var(--cyan); }
+.prio-green { background: var(--green-dim); border: 0.5px solid rgba(34,197,94,0.3); color: var(--green); }
+.prio-gray { background: rgba(123,128,143,0.12); border: 0.5px solid rgba(123,128,143,0.3); color: var(--muted); }
+
+.task-item {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+.task-item:hover {
+  transform: translateX(4px);
+  border-color: rgba(232,41,59,0.25);
+  background: var(--bg-card-h);
+}
+.task-item.done {
+  border-left: 3px solid var(--cyan);
+  border-radius: 0 12px 12px 0;
+}
+.task-check {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  border: 1.5px solid var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all 0.18s;
+}
+.task-item.done .task-check {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  color: #000;
+  font-size: 12px;
+}
+.task-body {}
+.task-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.task-item.done .task-name { color: var(--muted); text-decoration: line-through; }
+.task-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.5; }
+.task-item.done .task-desc { color: rgba(123,128,143,0.6); }
+.sub-list {
+  margin-top: 10px;
+  padding-left: 12px;
+  border-left: 1.5px dashed rgba(255,255,255,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.sub-item { font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.sub-item::before { content: '›'; color: var(--red); font-weight: 700; }
+
+/* MODAL */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(8,9,16,0.9);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(12px);
+}
+.overlay.open { display: flex; }
+.modal {
+  background: #0f1018;
+  border: 0.5px solid rgba(0,212,255,0.2);
+  border-radius: 18px;
+  max-width: 620px;
+  width: 100%;
+  padding: 28px;
+  animation: modalIn 0.25s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+@keyframes modalIn {
+  from { transform: scale(0.93); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+.modal-hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 0.5px solid var(--border);
+}
+.modal-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+}
+.modal-close {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.modal-close:hover { color: #fff; border-color: var(--border-h); }
+.modal-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+.modal-textarea {
+  width: 100%;
+  height: 220px;
+  background: rgba(0,0,0,0.4);
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  color: #7dd3fc;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  resize: none;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.modal-copy {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: var(--cyan);
+  color: #000;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.02em;
+}
+.modal-copy:hover { background: #33daff; }
+.toast {
+  position: fixed;
+  bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--green);
+  color: #000;
+  padding: 10px 22px;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  z-index: 999;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  opacity: 0;
+  pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* COUNTDOWN BANNER STYLES */
+.countdown-card {
+  max-width: 1100px;
+  margin: 0 auto 28px;
+  padding: 16px 28px;
+  background: linear-gradient(135deg, rgba(232, 41, 59, 0.05), rgba(0, 212, 255, 0.02));
+  border: 1.5px dashed rgba(232, 41, 59, 0.35);
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+@media(max-width: 820px) {
+  .countdown-card {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+    padding: 20px;
+  }
+}
+.cd-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cd-grid {
+  display: flex;
+  gap: 12px;
+}
+.cd-box {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-radius: 12px;
+  width: 72px;
+  height: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.05);
+}
+.cd-val {
+  font-family: 'Syne', monospace;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--cyan);
+  line-height: 1.1;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+}
+.cd-lbl {
+  font-size: 0.62rem;
+  color: var(--muted);
+  font-weight: 500;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-left">
+    <h1>Spider Hero<br><span>Rope City Wars</span></h1>
+    <p>Unity 6000.3.16f1 · Android · URP 17.3.0 · آخر تحديث: 2026-05-30</p>
+  </div>
+  <div class="version-badge">
+    <div class="v-dot"></div>
+    M12.56 مكتمل · Mobile Optimization ✅ · P7 ServiceLocator Migration next
+  </div>
+</header>
+
+<!-- COUNTDOWN -->
+<div class="countdown-card">
+  <div class="cd-title">
+    🚨 (Deadline: 19 June 2026) الوقت المتبقي لإطلاق النسخة البيتا
+  </div>
+  <div class="cd-grid">
+    <div class="cd-box">
+      <div class="cd-val" id="cd-days">00</div>
+      <div class="cd-lbl">يوم (DAYS)</div>
+    </div>
+    <div class="cd-box">
+      <div class="cd-val" id="cd-hours">00</div>
+      <div class="cd-lbl">ساعة (HOURS)</div>
+    </div>
+    <div class="cd-box">
+      <div class="cd-val" id="cd-mins">00</div>
+      <div class="cd-lbl">دقيقة (MIN)</div>
+    </div>
+    <div class="cd-box">
+      <div class="cd-val" id="cd-secs">00</div>
+      <div class="cd-lbl">ثانية (SEC)</div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-card wide">
+    <div>
+      <div class="stat-label">🚀 إجمالي التقدم — M1 إلى M12.50</div>
+      <div class="stat-val" id="histPct">—</div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="histBar" style="width:0%"></div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">مراحل مكتملة</div>
+    <div class="stat-val" style="color:var(--green)" id="doneCount">—</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">مهام مستقبلية</div>
+    <div class="stat-val" style="color:var(--gold)" id="futureCount">—</div>
+  </div>
+  <button class="ai-btn" onclick="openModal()">
+    <div class="ai-icon">🤖</div>
+    <div>
+      <div class="ai-label">AI Sync</div>
+      <div class="ai-sub">أرسل حالة المشروع للـ AI</div>
+    </div>
+  </button>
+</div>
+
+<!-- TABS -->
+<div class="tabs-outer-container">
+  <button class="scroll-btn left" onclick="scrollTabs(-200)" aria-label="Scroll left">&#8249;</button>
+  <div class="tabs-wrap" id="tabsWrap" style="scroll-behavior: smooth;">
+    <div class="tabs">
+      <!-- ترتيب حسب الأولوية (الأعلى = الأكثر أولوية) -->
+      <button class="tab active" onclick="sw(event,'history')">✅ Completed History</button>
+      <button class="tab" onclick="sw(event,'p1')">🔴 P1: Core Quality</button>
+      <button class="tab" onclick="sw(event,'p2')">🟠 P2: Gangs & Crimes</button>
+      <button class="tab" onclick="sw(event,'p3')">🟡 P3: Exploration</button>
+      <button class="tab" onclick="sw(event,'p4')">🟢 P4: Advanced AI</button>
+      <button class="tab" onclick="sw(event,'p5')">🔵 P5: Traversal V2</button>
+      <button class="tab" onclick="sw(event,'p6')">🟣 P6: Performance</button>
+      <button class="tab" onclick="sw(event,'p7')">⚫ P7: Architecture</button>
+      <button class="tab" onclick="sw(event,'p8')">🎨 P8: Audio & Polish</button>
+      <button class="tab" onclick="sw(event,'cinematic')">🎬 Cinematic & Villain</button>
+      <button class="tab" onclick="sw(event,'progression')">🌳 Skill Tree</button>
+      <button class="tab" onclick="sw(event,'missions')">🗺️ Mission V2</button>
+      <button class="tab" onclick="sw(event,'world')">👥 NPC & World</button>
+      <button class="tab" onclick="sw(event,'traffic')">🚦 Traffic System</button>
+    </div>
+  </div>
+  <button class="scroll-btn right" onclick="scrollTabs(200)" aria-label="Scroll right">&#8250;</button>
+</div>
+
+<div class="content">
+
+<!-- HISTORY SECTION -->
+<div id="sec-history" class="section active">
+  <div class="history-header">
+    <div class="history-title">سجل الإنجازات الحقيقية</div>
+    <div class="history-badge" id="histBadge">94% مكتمل</div>
+  </div>
+
+  <div class="milestone-group">
+    <div class="m-group-title">M1–M10 · الأسس والبنية التحتية</div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M1 — توحيد الأنظمة المزدوجة <span class="m-tag tag-done">✅</span></div><div class="m-meta">Damageble/Damageable bridge · SkillManagerV2 · تنظيف ملفات يتيمة</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M2–M4 · بنية الاختبار + Event Bus + Orphan Cleanup <span class="m-tag tag-done">✅</span></div><div class="m-meta">EventBus.cs · GameEvents.cs · GameOptimizer.cs · PoolManager.cs</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M5 — V3 Combat Overhaul <span class="m-tag tag-done">✅</span></div><div class="m-meta">35 ملف · NewCombatController · AirJuggle · Parry/Counter · FreeFlow · Disarm · Ground/Shockwave</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M6 — NPC & AI Overhaul <span class="m-tag tag-done">✅</span></div><div class="m-meta">NPCType (Normal/Aggressive/Coward) · Flee/Scream · NPCPool · أداء محسّن</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M7–M8 — Cleanup & Debug Isolation <span class="m-tag tag-done">✅</span></div><div class="m-meta">حذف Websites/ · unitytinypng/ · NiceVibrations/ · DebugSystemFilter.cs · Prefab cleanup</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M9 — V5 Cinematic Combat States <span class="m-tag tag-done">✅</span></div><div class="m-meta">SwingKickState · PerfectDodgeShotState · BladeDodgeTakedownState · DoubleYankBash · AerialAssault</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M10 — ROADMAP.md خريطة الطريق الشاملة <span class="m-tag tag-done">✅</span></div><div class="m-meta">6 مراحل تطوير موثقة · مرجع رسمي</div></div></div>
+  </div>
+
+  <div class="milestone-group">
+    <div class="m-group-title">M11 · Tech Debt Overhaul (98% — 44/45 مهمة)</div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M11.1 — أمن البيانات + إصلاحات حرجة <span class="m-tag tag-done">✅</span></div><div class="m-meta">SaveSystem.cs · SecurePlayerPrefs AES-256 · Constants.cs · CameraCache.cs · 289 استبدال SecurePrefs</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M11.2 — تقليل التكرار في القتال <span class="m-tag tag-done">✅</span></div><div class="m-meta">BaseAttackState.cs · 28 State يرثوا منه · HitInfoBuilder · PoolManager</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M11.3 — تفكيك God Objects <span class="m-tag tag-done">✅</span></div><div class="m-meta">UserData.cs 940→372 سطر (partial) · EnemyBase مقسّم · CameraController فرعيات مستخرجة</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M11.4 — تنظيف + أداء <span class="m-tag tag-done">✅</span></div><div class="m-meta">حذف 4 ملفات فارغة · TargetResolver محسّن · FootStepReceiver pool · AdsManager موحّد</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M11.5 — asmdef + اختبارات <span class="m-tag tag-done">✅</span></div><div class="m-meta">SpiderHero.Core + SpiderHero.Game · PlayMode/EditMode tests (placeholder) · SyncV2Data مكتمل</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M11.6 — توثيق + صيانة <span class="m-tag tag-done">✅</span></div><div class="m-meta">STATES_REFERENCE.md · إصلاح 13+ Null Reference · #if UNITY_EDITOR 15 ملف · ServiceLocator.cs</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M11.7 — Fix MissionManager <span class="m-tag tag-done">✅</span></div><div class="m-meta">إصلاح 8 مشاكل: double destroy · timeTaken · auto-spawn emergency · score/xp حقيقي</div></div></div>
+  </div>
+
+  <div class="milestone-group">
+    <div class="m-group-title">M12 · Cinematic Combat System + AAA Features (2026-05-23→30)</div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.1–M12.4 — Camera Upgrade + Combat Features + UI Refactor + Runtime Fixes <span class="m-tag tag-done">✅</span></div><div class="m-meta">CameraImpactSystem · CameraTargetingSystem · PostFX · SpiderSense · AttackWarp · CombatCoordinator · PanelBase · UIPanelManager</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.5–M12.7 — Animation Assignment + Asset Audit + Config Assets <span class="m-tag tag-done">✅</span></div><div class="m-meta">8 حركات مُعيّنة · animations.md · sounds.md · vfx.md · GAME_ANALYSIS.md · HitStopConfig.asset</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.8–M12.9 — Dodge System + Combat Variety <span class="m-tag tag-done">✅</span></div><div class="m-meta">Perfect Dodge Matrix · SpiderSense window · DodgeUnder · 4-directional dodge · Tempo Pause Finisher · Crowd Sensor leg sweeps · Directional branches</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.10–M12.14 — Bulk Animation + Yank + Combat Tester + StateChecker <span class="m-tag tag-done">✅</span></div><div class="m-meta">AnimationMapper · 25 حركة مرتبطة · YankAttackState · CombatTesterSystem 3 تبويبات · StateChecker O(1) HashSet</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.15–M12.18 — Cleanup + GitHub + NPC AAA + Combat Sandbox <span class="m-tag tag-done">✅</span></div><div class="m-meta">114 unused scripts · GitHub repo (1.73GB) · NPCController إعادة كتابة · Gameplay_CombatSandbox.unity 77MB→6MB</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.19–M12.22 — Combo Fix + Input + Clean Slate Reset <span class="m-tag tag-done">✅</span></div><div class="m-meta">Combo timeout 1.5s · keyboard input support · BeatDown whiff · AerialAttack DOTween fix · 29 states clean rebuild</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.23–M12.27 — State Restoration + SwingKick + YankDown + Animation Org <span class="m-tag tag-done">✅</span></div><div class="m-meta">8 original states restored · SwingKickState self-healing refs · YankDownState 3-phase · 105 anim files organized</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.28–M12.30 — Air Combo + NodeCanvas AI + Enemy Crash Fix + BT Upgrades <span class="m-tag tag-done">✅</span></div><div class="m-meta">AirJuggle vertical sync · 5 AI scripts · DodgeBackstep · RequestCombatTicket · IsLaunched · 4 BT files upgraded</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.31–M12.32 — Air Combo Precision + YankDown Fluidity <span class="m-tag tag-done">✅</span></div><div class="m-meta">20 sub-tasks · target alignment · web slam · CinematicZoomOut · VFX dynamic fallback · dual-hand web spawn</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.33–M12.34 — ThrowableProp + ObjectGrab + EnemyGrab <span class="m-tag tag-done">✅</span></div><div class="m-meta">ThrowableProp.cs · ObjectGrab.cs (barrel throw) · EnemyGrab.cs (web pull) · PropProximityDetector · AnimationEventRemover · ROADMAP_INTERACTIVE.html</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.35 — AAA Combat Camera System <span class="m-tag tag-done">✅</span></div><div class="m-meta">CombatCameraModule.cs · 7 حالات كاميرا · Lock-On SmoothDampAngle · Cinemachine Impulse · LockOn Override</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.36 — Combat Impulse Per-Attack + Conditional Freeze System <span class="m-tag tag-done">✅</span></div><div class="m-meta">CombatFreezeCondition.cs · CombatFreezeManager.cs · CombatFreezeUI.cs · IConditionalAttack · FreezeCondition_Fatality.asset</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.37 — Timeline Manager System <span class="m-tag tag-done">✅</span></div><div class="m-meta">TimelineManager.cs · GameEvents (TimelineStartedEvent/StoppedEvent/SkippedEvent) · تحكم مركزي لـ PlayableDirector مع Queue وSkip وCinemachine blends</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.38 — Cinematic Definition System <span class="m-tag tag-done">✅</span></div><div class="m-meta">CinematicDefinition.cs (ScriptableObject) · CinematicLibrary.cs (Singleton + Resources) · CinematicEditorWindow.cs (Spider Hero → Cinematic Editor) · CinematicLibrary.asset</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.39 — Test Infrastructure (43 PlayMode Tests) <span class="m-tag tag-done">✅</span></div><div class="m-meta">EventBusTests (8) · FreeFlowMeterTests (14) · SaveSystemCryptoTests (5) · SecurePlayerPrefsCryptoTests (6) · ServiceLocatorTests (10) · جميعها تشتغل في PlayMode لأن Assembly-CSharp صنّف كـ PlayMode</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.40 — Save System Upgrade (Backup + Recovery + Settings + IV fix) <span class="m-tag tag-done">✅</span></div><div class="m-meta">CreateBackup() · LoadFromBackup() · Fix IV random (AES GenerateIV) بدل الصفر · Settings في SaveData (musicMute, sfxMute, vibrateOff, swingVibrate, noEnergyCost) · 3 اختبارات جديدة = 46/46 tests pass</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.41 — Crash Logger & In-game Debugger <span class="m-tag tag-done">✅</span></div><div class="m-meta">CrashLogger.cs (auto-init, ring buffer 500, dedup, export report, file write) · InGameDebugger.cs (uGUI overlay #if UNITY_EDITOR, filter ALL/ERRORS/WARNINGS, expand stack trace, F1 toggle, 3-finger Android) · 13 اختبار جديد = 59/59 PlayMode tests pass</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.42 — Crime Events & Reputation System <span class="m-tag tag-done">✅</span></div><div class="m-meta">ReputationSystem.cs (5 مستويات -100..+100, events) · CrimeEventManager.cs (spawn robbery قرب اللاعب كل 30-60ث, resolution بالـ timer) · NPCController (Criminal type + escape AI + victim/rescue) · ReputationUI.cs (HUD + notification popup) · SaveSystem V4 (repPoints) · 24 اختبار جديد = 74/85 EditMode tests pass</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.43 — Dynamic World Events <span class="m-tag tag-done">✅</span></div><div class="m-meta">Crime tiers حسب السمعة (Robbery/CarJacking/BankHeist/HostageRescue) · CrimeSpawnedEvent + CrimeResolvedEvent · NPC rep reactions (Hero↔cheer/photo, Criminal↔fear, Villain↔flee) · Mission rep multiplier (0.5x→1.5x) · 74/85 EditMode tests pass</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.44 — Faction Territory & Gang Wars <span class="m-tag tag-done">✅</span></div><div class="m-meta">FactionArchetypeSO (4 فصائل: KingPin/Biker/Venom/Prisoner) · FactionManager (علاقة حسب السمعة: Friendly/Hostile/Neutral) · TerritoryZone (نصف قطر + حراس من EnemyGroupPool) · FactionTerritoryUI (شاشة اسم المنطقة + fade) · أحداث EventBus</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.45 — Open-World Side Activities <span class="m-tag tag-done">✅</span></div><div class="m-meta">SideActivityBase (abstract) · ParkourChallenge (checkpoints + timer) · RescueActivity (حماية مدني + هزيمة أعداء) · SideActivityManager (spawn تلقائي)</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.46 — Secret Collectibles System <span class="m-tag tag-done">✅</span></div><div class="m-meta">CollectibleSO (ScriptableObject) · CollectiblePickup (in-world, spin + proximity) · CollectibleManager (تتبع + حفظ) · أحداث EventBus</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.47 — Random Interactive Events <span class="m-tag tag-done">✅</span></div><div class="m-meta">RandomEventManager (Mugging/Accident/Distress بأوزان) · Mugging (مدني + مجرم) · Accident (مصاب) · Distress (محنة) · rep rewards · أحداث EventBus</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.48 — Coordinated Group Enemy AI (P4.1) <span class="m-tag tag-done">✅</span></div><div class="m-meta">GroupDefines (FormationType·TacticalRole·GroupTactic) · GroupCoordinator (8 formations, wave attacks, role assignment, retreat logic) · CombatCoordinator upgrade (group-aware tickets) · EnemyBase (tacticalRole·formationTarget·isAttacking) · EnemiesGroup integration · 5 BT tasks: TakeFormationPosition, CoordinatedAttack, GroupRetreat, IsGroupState, FormationReached</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.49 — Boss Battle Framework (P4.2) <span class="m-tag tag-done">✅</span></div><div class="m-meta">BossPhaseConfig (SO) · BossPhaseController (phase transitions, damage gates, QTE triggers) · WeakPoint (collider, ×2 damage, destroyable, phase-gated) · BossShield (breakable, regen) · QTE_Sequence + QTE_Controller + QTE_Prompt (multi-step QTEs, tap/hold/swipe/mash, timer, perfect bonus) · 8 EventBus structs · BossPhaseUI (segmented health, phase dots, colors) · BossMissionUI integration · 0 compilation errors</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.50 — Combat Performance Tracking (P4.3) <span class="m-tag tag-done">✅</span></div><div class="m-meta">CombatPerformanceDefines (data structs) · CombatPerformanceTracker (singleton, EventBus-driven, tracks combo/damage/kills/parry/dodge/accuracy/QTE, save/load bests via PlayerPrefs) · CombatPerformanceUI (F3 toggle, session stats + all-time bests) · 0 compilation errors</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.51 — Cinematic Swinging Upgrade (P5.1) <span class="m-tag tag-done">✅</span></div><div class="m-meta">Swing.cs: FOV burst on attach · Dutch tilt (camera roll) on turns · Dynamic FOV by speed · SpeedLines/wind particles · Rope tension snap FOV · Release boost VFX + camera orbit · Ground impact shake · 7 changes total, 0 new files, 0 compilation errors</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.52 — Advanced Parkour & Wall Traversal (P5.2) <span class="m-tag tag-done">✅</span></div><div class="m-meta">Climb.cs: 2-Phase vault fix · Ceiling crawl · Corner wrap · Wall-to-swing transition · Zip.cs: Wall impact VFX · Zip speed lines · 0 new files, 0 compilation errors</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.53 — DebugController (Centralized Log Control) <span class="m-tag tag-done">✅</span></div><div class="m-meta">DebugController.cs · [RuntimeInitializeOnLoadMethod(BeforeSceneLoad)] · Filters logs: Info suppressed in builds (filterLogType=Warning) · Controls all logs including third-party · 0 allocations</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.54 — P6.1 GC Minimization <span class="m-tag tag-done">✅</span></div><div class="m-meta">DebugController DC class with [Conditional(UNITY_EDITOR)] · 61 files replaced Debug.Log→DC.Log · Projectiles.Active static list · NewCombatController zero-alloc projectile scan · EnemyBase.Active static list · AbilityState zero-alloc chain-hit</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.55 — P6.2 Level Streaming Code Architecture <span class="m-tag tag-done">✅</span></div><div class="m-meta">LevelStreamingManager (grid-based chunk loader with async additive scenes) · ChunkLoader (auto-register component)</div></div></div>
+    <div class="m-item done"><div class="m-check">✓</div><div class="m-body"><div class="m-name">M12.56 — P6.3 Mobile Optimization Audit <span class="m-tag tag-done">✅</span></div><div class="m-meta">GameOptimizer (quality lvl 0 + LOD cap 2 + streaming mipmaps) · Fixed 60fps overrides · Android per-platform quality default · URP/Shader stripping confirmed optimal</div></div></div>
+  </div>
+
+  <div class="milestone-group">
+    <div class="m-group-title">🔄 في انتظار التنفيذ (Tech Debt Pending)</div>
+    <div class="m-item pending"><div class="m-check">⏳</div><div class="m-body"><div class="m-name">M11.5.6 — SyncV2Data() اكتمال كامل <span class="m-tag tag-pending">pending</span></div><div class="m-meta">ترحيل بيانات V1→V2 بشكل كامل</div></div></div>
+    <div class="m-item pending"><div class="m-check">⏳</div><div class="m-body"><div class="m-name">M11.6.5 — ServiceLocator استبدال الـ Singletons <span class="m-tag tag-pending">pending</span></div><div class="m-meta">10+ Singletons → ServiceLocator pattern</div></div></div>
+    <div class="m-item pending"><div class="m-check">⏳</div><div class="m-body"><div class="m-name">UserData.cs V2 Bridge — SyncV2Data() فارغ <span class="m-tag tag-pending">pending</span></div><div class="m-meta">M11.5.6 pending — السنكرة بين V1/V2 data schemas</div></div></div>
+  </div>
+</div>
+
+<!-- FUTURE SECTIONS — مرتبة حسب الأولوية -->
+<div id="sec-p1" class="section">
+  <div class="sec-header"><div class="sec-title">🔴 P1: Core Quality & Systems</div><div class="prio-badge prio-red">1st Priority</div></div>
+  <div id="list-p1"></div>
+</div>
+<div id="sec-p2" class="section">
+  <div class="sec-header"><div class="sec-title">🟠 P2: Living World & Gangs</div><div class="prio-badge prio-red">2nd Priority</div></div>
+  <div id="list-p2"></div>
+</div>
+<div id="sec-p3" class="section">
+  <div class="sec-header"><div class="sec-title">🟡 P3: City Exploration & Secrets</div><div class="prio-badge prio-gold">3rd Priority</div></div>
+  <div id="list-p3"></div>
+</div>
+<div id="sec-p4" class="section">
+  <div class="sec-header"><div class="sec-title">🟢 P4: Advanced AI & Combat</div><div class="prio-badge prio-green">4th Priority</div></div>
+  <div id="list-p4"></div>
+</div>
+<div id="sec-p5" class="section">
+  <div class="sec-header"><div class="sec-title">🔵 P5: Premium Traversal</div><div class="prio-badge prio-cyan">5th Priority</div></div>
+  <div id="list-p5"></div>
+</div>
+<div id="sec-p6" class="section">
+  <div class="sec-header"><div class="sec-title">🟣 P6: Performance Tuning</div><div class="prio-badge prio-gray">6th Priority</div></div>
+  <div id="list-p6"></div>
+</div>
+<div id="sec-p7" class="section">
+  <div class="sec-header"><div class="sec-title">⚫ P7: Clean Architecture</div><div class="prio-badge prio-gray">7th Priority</div></div>
+  <div id="list-p7"></div>
+</div>
+<div id="sec-p8" class="section">
+  <div class="sec-header"><div class="sec-title">🎨 P8: Audio & Polish</div><div class="prio-badge prio-green">8th Priority</div></div>
+  <div id="list-p8"></div>
+</div>
+<div id="sec-cinematic" class="section">
+  <div class="sec-header">
+    <div class="sec-title">🎬 Cinematic & Villain Framework</div>
+    <div class="prio-badge prio-cyan">Core Focus</div>
+  </div>
+  <div id="list-cinematic"></div>
+</div>
+<div id="sec-progression" class="section">
+  <div class="sec-header">
+    <div class="sec-title">🌳 Skill Tree & Player Progression</div>
+    <div class="prio-badge prio-gold">Progression Loop</div>
+  </div>
+  <div id="list-progression"></div>
+</div>
+<div id="sec-missions" class="section">
+  <div class="sec-header">
+    <div class="sec-title">🗺️ Mission Framework V2</div>
+    <div class="prio-badge prio-red">High Priority</div>
+  </div>
+  <div id="list-missions"></div>
+</div>
+<div id="sec-world" class="section">
+  <div class="sec-header">
+    <div class="sec-title">👥 NPC & World Simulation</div>
+    <div class="prio-badge prio-gold">Medium Priority</div>
+  </div>
+  <div id="list-world"></div>
+</div>
+
+<div id="sec-traffic" class="section">
+  <div class="sec-header">
+    <div class="sec-title">🚦 Traffic System — Gley Improvements</div>
+    <div class="prio-badge prio-red">Active Sprint</div>
+  </div>
+
+  <!-- Progress bar -->
+  <div style="background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:14px;padding:18px 20px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <span style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#7b808f;font-weight:500;">نسبة اكتمال النظام</span>
+      <span id="traffic-pct" style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;">60%</span>
+    </div>
+    <div class="progress-track"><div id="traffic-bar" class="progress-fill" style="width:60%;"></div></div>
+    <div style="display:flex;gap:20px;margin-top:14px;flex-wrap:wrap;">
+      <span style="font-size:0.78rem;color:#22c55e;">✅ موجودة: <b id="t-done-count">0</b></span>
+      <span style="font-size:0.78rem;color:#f5a623;">⚠️ جزئية: <b id="t-partial-count">0</b></span>
+      <span style="font-size:0.78rem;color:#e8293b;">❌ مفقودة: <b id="t-missing-count">0</b></span>
+      <span style="font-size:0.78rem;color:#7b808f;">مكتمل من Sprint: <b id="t-checked-count">0</b></span>
+    </div>
+  </div>
+
+  <!-- Filter tabs -->
+  <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;" id="traffic-filters">
+    <button class="tab active" data-filter="all" onclick="filterTraffic(this,'all')">الكل</button>
+    <button class="tab" data-filter="missing" onclick="filterTraffic(this,'missing')">❌ مفقودة</button>
+    <button class="tab" data-filter="partial" onclick="filterTraffic(this,'partial')">⚠️ جزئية</button>
+    <button class="tab" data-filter="present" onclick="filterTraffic(this,'present')">✅ موجودة</button>
+    <button class="tab" data-filter="sprint" onclick="filterTraffic(this,'sprint')">🔥 Sprint الحالي</button>
+  </div>
+
+  <div id="list-traffic"></div>
+</div>
+
+</div><!-- .content -->
+
+<!-- AI MODAL -->
+<div class="overlay" id="modal">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-title">🤖 AI Sync — حالة المشروع</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <p class="modal-desc">
+      انسخ هذا الـ prompt وأرسله لـ Claude / Cursor / أي AI assistant — سيفهم فوراً مرحلة المشروع وما تم إنجازه وما هو الخطوة القادمة.
+    </p>
+    <textarea class="modal-textarea" id="modalText" readonly></textarea>
+    <button class="modal-copy" onclick="copyPrompt()">📋 نسخ حالة المشروع</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">✅ تم النسخ — الصق مباشرة في محادثة الـ AI</div>
+
+<script>
+const TASKS = {
+  cinematic: [
+    { id:'c_mgr', title:'✅ Timeline Manager System', desc:'CinematicDefinition SO-based system with PlayableDirector queue, crossfade blends, skip, EventBus integration.', subs:[
+      'CinematicLibrary SO — central registry of CinematicDefinition entries, playback queue, priority sorting',
+      'TimelineManager singleton — Play(cinematicID), queue next, skip current, crossfade between directors (DOTween canvas fade 0.5s), EventBus publish (TimelineStarted/Stopped/Skipped)',
+      'CinematicDefinition SO — director reference, skipable flag, priority, blendIn/blendOut time, onComplete event ID, required mission state',
+      'Skip system — hold-to-skip (1.5s hold), fade-to-black 0.3s, restore gameplay state, EventBus TimelineSkippedEvent',
+      'Camera blend management — Cinemachine virtual camera activation during timeline, restore previous camera on stop',
+      'Integration with MissionFramework triggers — OnObjectiveComplete/OnEnterZone/OnEnemySpawn fire PlayableDirector via TimelineManager'
+    ] },
+    { id:'c_villain_fw', title:'✅ Villain Framework & Character Database', desc:'Character database with lore, abilities, dialogue scripts.', subs:[
+      'VillainDatabase SO — villainID, name, lore description, faction, abilities list, phase configs, dialogue tree references',
+      'VillainProfile — stats (HP, damage, speed, defense), phase thresholds (100%/70%/40%/10% HP), special abilities per phase, intro/outro timeline references',
+      'Dynamic villain events — villain appears in open world after N missions completed, random encounter radius, taunt dialogue on sight',
+      'Villain random encounters — proximity trigger (30m radius), 2-phase mini-boss fight, escape mechanic (villain flees at 20% HP), reputation reward on defeat'
+    ] },
+    { id:'c_villain_intro', title:'Villain Introduction Timeline', desc:'مشاهد تقديم درامية للأعداء الرئيسيين مع هبوط بطيء وبانرات UI مخصصة.', subs:[
+      'Intro sequence per villain — slow-motion descent (Timeline with custom camera angles), name reveal banner (DOTween scale+fade), faction emblem overlay',
+      'Villain entrance animation — custom animation set (land, stand up, taunt, weapon draw), sequenced with Timeline markers',
+      'UI banner system — villain name + title, faction colors, dramatic zoom on face, particle burst on name reveal, subtitle with voice line',
+      'Skip option — hold-to-skip after first viewing, auto-skip if already seen (SecurePlayerPrefs flag per villain)'
+    ] },
+    { id:'c_boss_dialog', title:'Boss Dynamic Dialogue System', desc:'الشرير يتكلم ويستهزئ ويتفاعل صوتياً حسب مراحل القتال وصحة اللاعب.', subs:[
+      'DialogueTree SO per boss — phase-based dialogue sets, HP threshold triggers (100%/70%/40%/10%), random taunts during combat (cooldown 15s)',
+      'Phase change bark — forced dialogue on phase transition (e.g. "You are strong, but not strong enough!"), 2s freeze + zoom on boss face',
+      'Player proximity barks — triggered when player is far (>30m, "Come back here!") or close (<5m, "Too close!")',
+      'Subtitle integration — all boss dialogue goes through AccessibilityManager subtitle system, speaker name + text scaling',
+      'Voice line pooling — AudioManager.Play(SoundID) with boss voice category, priority queue prevents overlap, lip flap animation sync'
+    ] },
+    { id:'c_intro', title:'✅ Timeline First Run (Intro Scene)', desc:'IntroCutscene system with model swap, comic panels, Timeline playback, first-launch gate.', subs:[
+      'IntroCutscene.cs — first-launch Timeline with cutsceneModel swap onto real player, comic panel sequence before Timeline, SecurePlayerPrefs "IntroPlayed" flag',
+      'Panorama city sweep — slow camera orbit around skyline, hero on skyscraper edge, dramatic music sting',
+      'Comic intro sequence — 3 comic-style panels (origin story summary), fade-to-black transitions, narrator voice-over',
+      'Smooth gameplay transition — player spawns at cutscene end position, state machine set to spiderIdle, camera blends from Timeline to gameplay',
+      'One-time gate — SecurePlayerPrefs check, skip entirely on subsequent launches, manual replay from options menu'
+    ] },
+    { id:'c_story', title:'Story Mission Timelines', desc:'مشاهد سينمائية في المراحل الرئيسية للقصة: افتتاحية، منتصف، وختام المهمة.', subs:[
+      'Per-mission timeline slots — MissionDefinitionSO references 3 timelines: intro, mid-point twist, outro conclusion',
+      'Intro timeline — mission briefing (giver NPC hologram/face cam), waypoint reveal, enemy drop-in, music sting',
+      'Mid-point timeline — triggered at 50% objective completion, villain interruption, new enemy wave spawn, phase change',
+      'Outro timeline — mission wrap-up, reward reveal (slow-mo cash/token burst), NPC reaction shot, transition to post-mission UI',
+      'Branch-aware timelines — different outro timelines based on branching path taken (success vs secret objective)'
+    ] },
+    { id:'c_boss', title:'4-Phase Boss Fight Timelines', desc:'سينمائي لكل مرحلة: دخول الشرير، انتقال (70% HP)، غضب (40%)، ذعر (10%).', subs:[
+      'Phase 1 intro — boss entrance (slow walk, dramatic lighting, name banner), 3s freeze frame, player combat state enable',
+      'Phase 2 transition (70% HP) — boss roar + shockwave (knocks player back), new weapon/ability reveal, phase UI update',
+      'Phase 3 enrage (40% HP) — boss grows/glows (color shift + scale up), faster attack speed, new attack pattern, screen shake',
+      'Phase 4 desperation (10% HP) — boss final stand (broken armor, heavy breathing), QTE prompt, cinematic finisher setup',
+      'Inter-phase blending — PlayableDirector during boss invulnerability window, player input disabled, camera on boss, resume on end'
+    ] },
+    { id:'c_defeat', title:'Boss Defeat Timeline', desc:'مشهد إنهاء مُرضٍ: سلوموشن، زوايا كاميرا درامية، وضعية انتصار، عرض المكافأة.', subs:[
+      'Slow-motion final blow — TimeManager slow-mo (0.1x for 2s), camera zoom on impact, particle burst, screen flash white',
+      'Boss defeat animation — staggered fall, explosion VFX (4 bursts), fade-to-black 1s, boss ragdoll or pre-baked death anim',
+      'Victory pose — player strikes pose (custom animation), camera orbit 180° around player, lens flare, dramatic lighting',
+      'Reward display — UI panel slides up (tokens, XP, cosmetic unlock), slow-mo coin burst particle, music swell to victory theme',
+      'Post-defeat state — territory liberation update, NPC reaction dialogue, fast-travel unlock, mission complete EventBus publish'
+    ] },
+    { id:'c_combat', title:'Interactive Combat Timelines', desc:'تفعيل تلقائي للسينمائيات على الحركات المتقدمة: Ground Finisher, Beat Down, SwingKick.', subs:[
+      'Ground Finisher timeline — triggered on stunned enemy, 2s cinematic (camera arc, web-pull, final punch), damage applied at impact marker',
+      'Beat Down timeline — 3-hit combo sequence, each hit has camera cut, slow-mo on final hit, VFX burst per impact',
+      'SwingKick timeline — camera follows arc of swing, freeze-frame on connect, spin-cam around impact point, enemy launch',
+      'Combat timeline triggers — BaseAttackState override PlayCinematicTimeline(), checks CinematicDefinition for current attack, blends back to gameplay on end',
+      'Non-blocking design — timelines run in parallel with state machine (state stays in attack, timeline is visual-only), input buffered for next action'
+    ] },
+    { id:'c_world', title:'Dynamic World Timelines', desc:'مقدمات سينمائية عند أحداث العالم الكبيرة: سرقة بنك، حادث طائرة، وصول الشرير.', subs:[
+      'Bank robbery timeline — alarms, civilians flee, robbers exit with bags, police surround, player arrival camera swoop, combat starts',
+      'Plane crash timeline — plane model descends with smoke trail, impact explosion (screen shake 0.5s), debris particle system, rescue NPCs from fire',
+      'Villain arrival timeline — sky darkens (DOTween color tint 0.5→0.2), villain landing camera shake, dramatic music sting, villain name banner',
+      'World event detection — CrimeEvent/RandomEvent publishes TimelineStartedEvent, TimelineManager picks world timeline from CinematicLibrary, queues and plays',
+      'Ambient reaction — NPCs flee/scream/record on phone during global event timelines, traffic halts, pedestrian density drops 80%'
+    ] },
+  ],
+  progression: [
+    { id:'prog_loop', title:'Player Progression Loop (XP & Level)', desc:'نظام XP وLevels مبني على القتال والمهام ومنع الجرائم، يُغذّي رتب البطل.', subs:[
+      'XP sources — combat (enemy kill = 10-50XP), missions (100-500XP based on difficulty), crime prevention (25XP), side activities (75XP), daily bonus (50XP first activity)',
+      'Level system — 50 levels, exponential curve (level N requires N*100 XP), each level grants 1 skill point + stat increase (HP+5, damage+1%)',
+      'Reputation ↔ XP synergy — higher reputation tier gives XP multiplier (Hero=1.5x, Citizen=1.25x, Neutral=1x, Criminal=0.75x, Villain=0.5x)',
+      'Title ranks — 10 hero titles (Newcomer→Wall-Crawler→Hero→Legend), unlock at milestone levels (5/10/20/30/40/50), cosmetic reward per title',
+      'SaveSystem persistence — current level, total XP, prestige count, all-time stats tracked in SaveData V5+'
+    ] },
+    { id:'skill_tree', title:'Triple-Branch Skill Tree', desc:'شجرة مهارات تفاعلية بثلاثة مسارات.', subs:[
+      'Combat Tree: Air Launcher, Perfect Counter, Advanced Web Pull',
+      'Traversal Tree: Double Swing Boost, Web Zip Chain, Wall Run Boost',
+      'Hero Tree: Max Health, Focus Gain, Spider Sense Upgrade'
+    ] },
+    { id:'prog_unlocks', title:'Costumes Shop & Perks Store', desc:'ملابس قابلة للفتح مع قدرات فريدة + متجر ترقيات وـ gadget perks.', subs:[
+      'Costume unlock system — 12+ costumes (Classic, Noir, Armored, Stealth, Iron Spider, Symbiote, etc.), unlock via level milestones + side quest tokens',
+      'Costume perks — each costume grants 1 unique passive (e.g. Noir: silent footsteps, Armored: +25% HP, Symbiote: rage mode below 20% HP)',
+      'Perk store — 20+ gadget perks organized in 4 tiers (Common→Rare→Epic→Legendary), purchased with in-game currency earned from missions',
+      'Inventory UI — categorized grid (Costumes/Perks/Emotes/Trails), preview 3D model rotation, perk slot system (3 active slots + 1 ultimate)',
+      'SaveSystem persistence — unlocked costumes (bitmask), equipped set, perk inventory, currency balance'
+    ] },
+  ],
+  missions: [
+    { id:'m_fw_v2', title:'Mission Framework V2 Architecture', desc:'إعادة تصميم نظام المهام لدعم branching logic وsub-objectives وtriggers سينمائية.', subs:[
+      'MissionDefinition ScriptableObject — replaces MonoBehaviour-on-prefab pattern; contains objectives list, branching conditions, trigger config, reward table, dialogue references',
+      'MissionObjective system — serializable objective types: KillTarget(amount, enemyType), CollectItem(itemID, count), ReachPosition(waypoint), Protect(target, duration), Interact(objectID), Timed(surviveSeconds), Branch(condition → nextObjectiveID)',
+      'Branching logic engine — MissionBranchEvaluator: evaluates objective completion flags, player stats, reputation level, previous mission outcomes; selects next objective ID from branch table; supports AND/OR/NOT conditions',
+      'Sub-objective tracking — nested objectives within a phase; sub-objectives contribute partial progress percentage; all sub-objectives must complete for parent objective to complete',
+      'Cinematic trigger system — MissionTrigger types: OnObjectiveComplete(playDirector), OnEnterZone(playDirector), OnEnemySpawn(playDirector), OnTimer(delay → playDirector); binds PlayableDirector timeline references automatically',
+      'MissionEventBus integration — EventBus structs: ObjectiveProgressEvent(objectiveID, progress), MissionPhaseEvent(phaseID, enter/exit), MissionBranchEvent(fromID, toID, conditionResult)',
+      'MissionSaveData — persist mission state (completedObjectives, activeBranch, phaseIndex, variables) via SaveSystem; resume interrupted missions on app restart',
+      'MissionResultV2 — extended from existing MissionResult: per-objective star ratings, branch path taken, cinematic triggers fired, sub-objective completion rate, bonus conditions'
+    ] },
+    { id:'m_main', title:'Main & Campaign Narrative Quests', desc:'حملة قصة رئيسية متعددة المراحل مع حوار وسينمائيات ومعارك boss فريدة.', subs:[
+      'CampaignMissionList — MissionManager extension: sequential campaign chapter list (ScriptableObject), each chapter has 3-5 mission slots, branch points between chapters based on player choice/reputation',
+      'ChapterDefinition SO — chapterID, title, description, requiredReputation, missions[], introCutscene(PlayableDirector), outroCutscene(PlayableDirector), bossMission reference',
+      'BossMissionV2 — extends BossMission: phase-based (4 phases: intro→fight→enrage→desperation), per-phase PlayableDirector cutscene, QTE sections between phases, unique enemy abilities per phase',
+      'Campaign dialogue system — per-mission dialogue trees (ScriptableObject), branching NPC responses based on mission state, voiced lines placeholder system (text-to-speech fallback), subtitle integration with AccessibilityManager',
+      'Mission giver NPCs — dedicated NPCs across city districts (Daily Bugle editor, Aunt May, MJ, police captain); each has idle animation set, quest marker above head, interaction prompt (uGUI button or proximity trigger)',
+      'Campaign progress UI — quest journal panel: active mission tracking, completed chapters recap, next mission preview, skip-to-mission (if already unlocked), reward preview (XP, tokens, costume unlock)',
+      'Narrative beat milestones — every 3 campaign missions: cinematic recap (previously-on summary), new villain introduction timeline, city status update (reputation effect visual)',
+      'Post-campaign looping — after final campaign mission: new game+ mode (enemies scaled, same chapters with harder objectives), alternate dialogue paths, secret ending branch'
+    ] },
+    { id:'m_side', title:'Side Quests & Character Storylines', desc:'مهام جانبية اختيارية في أحياء المدينة تفتح tokens تجميلية.', subs:[
+      'SideQuestManager — separate from main MissionManager; holds side quest pool (up to 6 active plus queue), per-district quest givers, availability window (day/night cycle), reputation requirement gates',
+      'SideQuestDefinition SO — questID, giverNPC, district, prerequisites(previousQuests[], minReputation, dayTime), objectives[], rewardTokens(cosmeticIDs[]), dialogueTree, failure conditions',
+      'Cosmetic token rewards — 15+ cosmetic items across categories: suits (classic, armored, noir, spider-armor), emotes (taunt, dance, sit), web-shooter skins, traversal trails (gold, neon, fire), unlock via side quest completion, tracked in SaveData',
+      'Character storyline chains — 3-5 quest chains per character: Black Cat (heist→betrayal→redemption arc), Venom (symbiote corruption→rescue), Kraven (hunting challenges→final hunt), Mysterio (illusion→truth), Sandman (accident→rampage→reform)',
+      'District-locked quests — Financial District (corruption, white-collar crime), Industrial Zone (toxic waste, gang territory), Chinatown (triad operations, smuggling), Docks (shipping heists, sea monster rumors), Suburbs (missing persons, serial bomber)',
+      'Dynamic side quest generation — procedural "mini-side" quests: stop mugging, rescue hostage, defuse trap, race to waypoint, photo evidence — infinite replay with random parameters (location, enemy type, time limit)',
+      'Side quest UI — district map with quest markers (color-coded: available/active/completed/locked), quest giver indicator (exclamation/question mark), progress tracker per quest, reward preview on hover',
+      'Reputation gates — side quests locked behind CityReputation thresholds: Citizen (unlock district basics), Hero (unlock character chain finale), Villain (unlock crime-lord quests)'
+    ] },
+    { id:'m_faction', title:'Faction Territory Operations', desc:'تفكيك مخابئ العصابات، إيقاف الشحنات، تأمين المناطق.', subs:[
+      'FactionOperationSystem — integrates with existing FactionManager + TerritoryZone; per-territory operation list, faction reputation gates, territory liberation progress (%), persistent faction control state',
+      'FactionOperationDefinition SO — operationID, factionType (Thugs/Vipers/Prisoners/Bikers), territoryZone, operationType (HideoutRaid/ShipmentIntercept/AreaSecure/BossElimination), objectives[], rewards, failurePenalty',
+      'Hideout Raid operation — enter gang hideout (interior instance), eliminate all enemies (3-5 waves), collect intel (pickup item), optional stealth bonus (undetected → extra tokens), boss spawn at final wave',
+      'Shipment Intercept operation — chase fleeing convoy (vehicles), destroy/disable target vehicle (web-shooter, yank), collect cargo, fight reinforcement wave, time-limited (3 min before convoy escapes city)',
+      'Area Secure operation — clear territory zone of enemies, defend zone for 90s (3 reinforcement waves), capture flag point (stand in radius 10s uncontested), permanent faction influence reduction in zone',
+      'Boss Elimination operation — faction leader boss fight: unique arena, 3-phase boss with faction-themed abilities, minion spawns between phases, cinematic intro/outro, territory fully liberated on completion',
+      'Territory liberation tracking — per-zone progress (0-100%), faction control % by district, liberation milestones unlock fast-travel points + shop discounts + new side quests',
+      'Faction war dynamic — liberated territories can be re-contested (faction counter-attack event after N missions elsewhere), faction vengeance squads hunt player in hostile zones, reputation decay over time'
+    ] },
+  ],
+  world: [
+    { id:'w_npc_life', title:'NPC Daily Life Routines', desc:'المارة يمشون، ينتظرون عند الإشارات، يتحدثون، يتصفحون الهواتف ويتفاعلون مع الأحداث.', subs:[
+      'NPC schedule system — time-of-day driven: morning commute (8-10am), lunch (12-2pm), evening return (5-7pm), night (9pm-5am minimal traffic)',
+      'Idle behavior set — walking (navmesh follow path), standing (look at phone), sitting (bench/cafe), talking (facing NPC, gesture anims), waiting (crosswalk)',
+      'District variety — Financial District (suit walk, briefcase), Chinatown (market stall browse, carry bags), Industrial (worker hard hat), Suburbs (dog walk, jog)',
+      'Event reactions — NPCs flee (scream, drop items) during crime, cheer (applause, phone recording) during hero landing, fear (back away, cover head) during villain',
+      'Phone interaction — 40% of idle NPCs hold phone, random browse animation, occasional selfie (turn towards player if hero nearby), call (hand to ear)',
+      'Traffic-aware pathing — NPCs stop at crosswalks, wait for green light (8s cycle), jaywalk if no cars within 5m, crowd at bus stops during rush hour'
+    ] },
+    { id:'w_npc_react', title:'NPC Hero Reactions & Crowd Behavior', desc:'المارة يصفقون أو يهربون أو يصورون عند هبوط البطل، حسب سمعته.', subs:[
+      'Reputation-driven reactions — Hero: cheer + photo + "It\'s Spider Hero!", Citizen: wave + smile + thumbs up, Neutral: ignore + glance, Criminal: glare + flee, Villain: insult + run + call for backup',
+      'Proximity reaction zones — 5m (intimate: high-five, autograph), 15m (social: wave, photo), 30m (distant: glance, point, ignore)',
+      'Crowd behavior system — NPCs within 20m of each other form crowd, shared reaction (all cheer if hero reputation is Hero), fear propagation (one flee → nearby flee)',
+      'Photo/video reaction — 20% of nearby NPCs pull out phone, aim at player, record 5s then lower, occasional flash, stored in crowd memory (duration before returning to idle)',
+      'Mission reputation multiplier — 0.5x (Villain) → 1.5x (Hero), applied to mission score/XP rewards, displayed in mission result UI',
+      'Dynamic reputation shifts — hero actions +rep (crime stop +5, mission complete +3, civilian save +2), negative actions -rep (civilian hit -10, property damage -3)'
+    ] },
+    { id:'w_weather', title:'Dynamic Weather & Atmospheric System', desc:'دورة نهار/ليل + مطر ديناميكي + ضباب + عواصف رعدية تؤثر على الإضاءة.', subs:[
+      'Day/night cycle — 24-minute full cycle (1 game minute = 1 real second), sun position lerp via DOTween, ambient light color shift (warm day→cool night), starfield at night',
+      'Dynamic rain system — particle system rain (density 100-1000 drops), rain reacts to wind direction, puddle formation on ground (reflection probe swap), umbrella NPCs',
+      'Fog system — volumetric fog (URP) density control, morning mist (6-8am), evening fog (6-8pm), rain fog (visibility 50m), smog over Industrial district',
+      'Thunderstorm — lightning flash (screen white burst 0.1s), thunder SFX (AudioManager.Play delayed by distance), rain intensity spike (200%), wind gust particles',
+      'Weather ↔ gameplay — rain reduces web traction (swing speed -15%), fog reduces enemy detection range (-30%), thunder masks footstep sounds, night buffs stealth damage (+25%)',
+      'Weather transitions — smooth blend between states (DOTween 10s), weather forecast system (next weather scheduled at cycle start), persistent via SaveData'
+    ] },
+    { id:'w_traffic', title:'Dynamic Traffic & Density Scaling', desc:'حركة مرور متزامنة مع الوقت: ازدحام صباحي، هدوء ليلي، هلع عند القتال.', subs:[
+      'Traffic density curve — peak rush hour (8-10am: 80% density, bumper-to-bumper 5m/s), midday (35% density, free flow 15m/s), evening (60%), night (15%, sparse)',
+      'Vehicle types — cars (70%), trucks (15%), buses (10%), emergency (5% — police/fire/ambulance with lights on during crime events)',
+      'Traffic light system — 4-way intersections with signal cycles (green 20s → yellow 3s → red 20s), vehicles stop/queue at red, emergency vehicles ignore signals',
+      'Combat traffic response — vehicles within 30m of combat slow to 5m/s, within 10m stop + driver flee, pile-up physics if multiple stop suddenly, horns honk',
+      'Player traffic interaction — web-yank car (stolen car alarm), land on car (hood dent + horn), swing through traffic (near-miss honk reaction), traffic cone physics'
+    ] },
+    { id:'w_m12_60', title:'✅ M12.60 — NPC & World Simulation Upgrades', desc:'WeatherSystem (starfield+forecast+puddles+save), TrafficController (vehicleDist+signals+combat+player), NPCCrowdReaction (repMultiplierCurve+rep-driven), 16 compile fixes.', subs:[
+      'WeatherSystem upgrade — starfield particles (500 stars, night activation 0.3), weather forecast schedule with transitions, puddle formation/drying (max 20), SecurePlayerPrefs save/load, fog via RenderSettings (URP 17.x removed Fog volume override)',
+      'TrafficController rewrite — VehicleTypeDistribution with weighted random, IntersectionSignalTiming (Green→YellowGreen→Red cycle), combat response (stop 10m/slow 30m), player interaction (near-miss honk, car land damage, driver flee), EmergencyOverride',
+      'NPCCrowdReaction upgrade — AnimationCurve repMultiplierCurve (Villain 0.5x→Hero 1.5x), rep-driven reactions (Hero: cheer+photo, Citizen: cheer, Neutral: ignore, Criminal/Villain: flee), GetMissionRepMultiplier() public API',
+      '16 compilation errors fixed — using Pathfinding, qualified DistrictConfig, public StartFleeing(), VehicleTypes (Car-only Gley API), TrafficLightsColor (4-state), ParticleSystem Instantiate, AudioSource.PlayClipAtPoint'
+    ] },
+  ],
+  p1: [
+    { id:'p1_test', title:'✅ Implement Real Unit/PlayMode Tests', desc:'43 اختبارات: EventBus (8) · FreeFlowMeter (14) · SaveSystem (5) · SecurePlayerPrefs (6) · ServiceLocator (10) — كلها تشتغل في PlayMode.', subs:[
+      'EventBusTests.cs — 8 tests: subscribe + fire + unsubscribe + unsubscribeAll + clear + multiple subscribers + fire with data + fire no subscribers (no crash)',
+      'FreeFlowMeterTests.cs — 14 tests: init 0, gain, gain overflow, spend, spend underflow, multiple ticks, full cycle fill→empty, fill→empty→fill, zero max → no div by zero, negative delta clamped to 0, event fires at 0/100/50%, multiple listeners, serialization round-trip, reset mid-cycle',
+      'SaveSystemTests.cs — 5 tests: save + load string/int/bool/float, overwrite existing key, default value on missing key, round-trip complex data (Vector3 serialized), persistence across simulated app restart (PlayerPrefs DeleteAll → reload)',
+      'SecurePlayerPrefsTests.cs — 6 tests: AES encrypt → decrypt round-trip, encrypted value differs from plaintext, tampered ciphertext detected, invalid key fails gracefully, concurrent save/load thread safety (no coroutines), large data (64KB) round-trip',
+      'ServiceLocatorTests.cs — 10 tests: register + get singleton, register override throws, get unregistered returns null, register + get interface, register MonoBehaviour, register + get + clear, clear all, multiple different types, register same type twice (override=false throws, override=true replaces)',
+      'All 43 tests run via Unity Test Runner (EditMode) — every push gated on green suite'
+    ] },
+    { id:'p1_save', title:'✅ Save System Upgrade (JSON Save Slots)', desc:'Backup/Recovery (save.json.bak) · Fix IV (AES GenerateIV) · Settings (musicMute, sfxMute, vibrateOff, swingVibrate, noEnergyCost) · 3 اختبارات جديدة · 46/46 PlayMode tests pass.', subs:[
+      'Backup/Recovery system — save.json.bak created before every write; on load failure (corrupt/missing), auto-restores from .bak with DataRecoveryEvent dispatched via EventBus',
+      'AES GenerateIV fix — IV now randomly generated per encryption session instead of static; stored alongside ciphertext; decrypt extracts IV from first 16 bytes before decryption',
+      'Settings persistence — 5 new fields in SaveData: musicMute(bool), sfxMute(bool), vibrateOff(bool), swingVibrate(bool), noEnergyCost(bool) — saved/loaded via SecurePlayerPrefs + JSON',
+      '3 new SaveSystem tests — backup integrity (corrupt primary → auto-restore), IV uniqueness across saves, settings round-trip (save all 5 → reload → verify each)',
+      'SaveData versioning — schema version integer, V3→V4 migration path for new settings fields, backward-compatible load for legacy saves',
+      'All 46/46 PlayMode tests pass — full suite green'
+    ] },
+    { id:'p1_err', title:'✅ Crash Logger & In-game Debugger', desc:'CrashLogger.cs (API capture, ring buffer 500, dedup, export report) + InGameDebugger.cs (uGUI overlay, filter ALL/ERRORS/WARNINGS, F1/3-finger, expand stack) + 13 اختبار = 59/59 PlayMode tests.', subs:[
+      'CrashLogger.cs — Application.logMessageReceivedThreaded capture, ring buffer (500 entries, FIFO eviction), dedup by message+stack hash (same error within 5s coalesced), export report to string (JSON format with timestamp, type, message, stack, build info)',
+      'InGameDebugger.cs — uGUI overlay (ScrollRect + Text), 3 filter modes: ALL/ERRORS/WARNINGS, toggle with F1 keyboard or 3-finger tap (mobile), expand/collapse stack trace per entry, color-coded by type (red=error, yellow=warning, white=log)',
+      'InGameDebugger UI — persistent Canvas (sortOrder=9999), auto-hide after 30s idle, show last 100 entries, tap top bar to clear, low overhead (no allocations in hot path)',
+      '13 CrashLogger tests — capture log/error/warning/exception, ring buffer wrap (500+ entries), dedup same message within window, dedup different messages, export format validity, InGameDebugger toggle on/off/on, filter ALL shows all types, filter ERRORS hides warnings+logs, stack expand/collapse, clear, auto-hide timer, 3-finger gesture detection, multi-threaded log safety',
+      'All 59/59 PlayMode tests pass — full suite green'
+    ] },
+  ],
+  p2: [
+    { id:'p2_crime', title:'✅ Dynamic Crime System', desc:'CrimeSpawner with random events: robbery, car theft, police chase, gang fight. EventBus-driven.', subs:[
+      'CrimeSpawner — random crime events across city districts, configurable types (robbery/car theft/police chase/gang fight), cooldown system per district',
+      'CrimeType enum — Robbery, CarTheft, PoliceChase, GangFight, Mugging, HitAndRun, Vandalism, HostageCrisis',
+      'CrimeSpawnedEvent / CrimeResolvedEvent — EventBus structs with crimeType, position, success/fail, repDelta',
+      'Proximity-based activation — crime spawns within 100-300m of player, active for 60s before fleeing, indicator on compass',
+      'Resolution rewards — rep +5/10/15 based on difficulty, small XP bonus, cash reward, "Crime Stopper" achievement progress',
+      'Failure consequences — unresolved crime reduces district rep -2, increases faction influence in zone by 1%'
+    ] },
+    { id:'p2_rep', title:'✅ City Reputation System', desc:'RepLevel enum (Villain→Hero), ReputationSystem singleton with NPC reaction dispatch, mission multiplier.', subs:[
+      'RepLevel enum — Villain(0)→Criminal(1)→Neutral(2)→Citizen(3)→Hero(4), 5 tiers with 1000 points between each',
+      'ReputationSystem — singleton, GainRep(int)/LoseRep(int) methods, Level property computes tier from total rep, EventBus publish on tier change',
+      'NPC reaction dispatch — SceneReferences queries ReputationSystem.Level, dispatches correct reaction set (Hero←cheer+photo, Citizen←wave, etc.)',
+      'Mission score/XP multiplier — applied in MissionManager.OnMainMissionEnd: 0.5x(Villain)→0.75x(Criminal)→1.0x(Neutral)→1.25x(Citizen)→1.5x(Hero)',
+      'SaveSystem persistence — total reputation saved in UserData (V3+), loaded on game start, cloud sync via SecurePlayerPrefs'
+    ] },
+    { id:'p2_gang', title:'✅ Faction Territory & Gang Wars', desc:'FactionArchetypeSO (4 factions) + FactionManager + TerritoryZone + FactionTerritoryUI + EventBus.', subs:[
+      'FactionArchetypeSO — 4 ScriptableObjects: Thugs (Industrial), Vipers (Chinatown), Prisoners (Docks), Bikers (Suburbs), each with color, emblem, enemy prefab set',
+      'FactionManager — singleton, tracks faction influence per territory zone, handles gang war events, spawns faction patrols, publishes TerritoryEntered/ExitedEvent',
+      'TerritoryZone — MonoBehaviour with sphere collider radius, faction owner, guard spawn points, influence level (0-100%), minimap color overlay',
+      'FactionTerritoryUI — minimap territory colors (faction color), zone name label on enter, influence bar during combat, "Territory Liberated!" toast on 100%',
+      'TerritoryEnteredEvent / TerritoryExitedEvent — EventBus structs carrying FactionArchetypeSO and FactionRelation (Ally/Neutral/Hostile), used by UI and enemy AI',
+      'Gang war dynamic — territory raids by rival factions, defense events (protect zone from invading gang), faction retaliation when player operates in hostile territory'
+    ] },
+  ],
+  p3: [
+    { id:'p3_side', title:'Open-World Side Activities', desc:'سباقات توقيت، تحديات parkour، إنقاذ رهائن، مطاردات.', subs:[
+      'Time trial races — web-swing race through 8-12 checkpoints in 90s, ghost replay (best time), district leaderboard, reward: tokens + XP + district rep',
+      'Parkour challenges — rooftop obstacle course (wall-run, zip, vault, swing segments), 3-star rating (time + style points), trick bonus for flips',
+      'Hostage rescue — NPC surrounded by 3-5 enemies, stealth approach bonus, web-zip extraction, escort to safe zone (100m), time limit 120s',
+      'Vehicle pursuit — chase fleeing car (web-zip+swing follow), yank driver out, stop vehicle before it escapes district, high-speed near-miss bonus',
+      'District side activity rotation — 3-5 activities active per district per day, refresh on new game day, activity density based on district liberation %',
+      'SideActivityBase — abstract class with StartActivity/UpdateActivity/CompleteActivity, EventBus publish (ActivityStarted/Progress/Finished), SaveData persistence'
+    ] },
+    { id:'p3_secret', title:'Secret Collectibles System', desc:'حقائب مخفية، تسجيلات صوتية، مواقع تصوير على المرتفعات، سجلات بحث.', subs:[
+      'CollectibleSO — ScriptableObject per item: itemID, name, description, type (AudioLog/PhotoSpot/Bag/ResearchNote), position, district, isCollected bool',
+      'Audio logs — 30+ collectible audio logs (lore, villain backstory, scientist notes), playback via AudioManager, subtitle support, unlock journal entry',
+      'Photo spots — 20 scenic locations (highest building, sunset bridge, etc.), alignment minigame (frame target within viewfinder), save photo to gallery',
+      'Hidden bags — 50 stashes across city (alleyways, rooftops, sewers), contain currency + crafting mats, respawn weekly, marked on map after district liberation',
+      'Research notes — 15 scientist logs (Dr. Connors, Otto Octavius clues), piece together mystery, full set unlocks secret boss fight',
+      'Collection UI — categorized progress (X/30 logs, X/20 photos, etc.), district completion %, reward per full set (costume/token/ability)',
+      'CollectibleCollectedEvent — EventBus publish on collect, triggers achievement observer, updates UI counter, district completion check'
+    ] },
+    { id:'p3_rand', title:'Random Interactive Events', desc:'لقاءات صغيرة: إيقاف سارق حقيبة، مساعدة مصاب، حادث سيارة.', subs:[
+      'RandomEventType enum — Mugging, HitAndRun, MedicalEmergency, CarAccident, CatInTree, LostChild, BrokenTrafficLight, BankRobbery',
+      'RandomEventSpawner — timer-based (60-180s cooldown), spawns event within 50-150m of player, district-appropriate types, day/night filter',
+      'Event interaction — proximity trigger (10m), context prompt (UI button "Press E to help"), short animation sequence, success/fail outcome',
+      'Mini-mission flow — accept event → short objective (beat 3 thugs / web-stanchion car / find lost cat) → complete/fail → reward/pedalty',
+      'RandomEventResolvedEvent — EventBus with helped(bool), triggers rep change (+2/-1), side quest progress, achievement tracking',
+      'Event variety pool — 12 distinct event types, each with 2-3 location variants, seasonal rotation (Christmas tree rescue, July 4th cat)',
+      'Cooldown per type — each event type on individual 300s cooldown to prevent spam, max 1 event visible at a time'
+    ] },
+  ],
+  p4: [
+    { id:'p4_ai', title:'✅ Coordinated Group Enemy AI', desc:'GroupCoordinator with 8 formations (Surround/Line/Flank/Wedge/Defensive/Assault/Retreat) · tactical roles (Leader/Flanker/Rusher/Defender) · wave attacks · retreat at 35% HP · 5 BT tasks', subs:[
+      'GroupCoordinator — MonoBehaviour per encounter, manages formation state machine, assigns tactical roles, broadcasts group commands via EventBus',
+      '8 formations — Surround (encircle player), Line (frontal wall), Flank (split attack), Wedge (breakthrough), Defensive (protect point), Assault (aggressive push), Retreat (fall back), Scatter (take cover)',
+      'Tactical roles — Leader (drives formation, calls attacks), Flanker (circles to rear), Rusher (charges player), Defender (guards leader/point), each with unique BT sub-tree',
+      'Wave system — sequential enemy spawns (1-3 waves), wave complete triggers next wave spawn, boss wave on final wave, inter-wave delay 5s for breathing room',
+      'Retreat logic — group retreats when < 35% enemies remain or leader HP < 20%, flee to nearest cover, regroup after 10s if player pursues, surrender if cornered',
+      '5 NodeCanvas BT tasks — GroupAttack (coordinate), GroupDefend (hold position), GroupFlank (encircle), GroupRetreat (fall back), GroupRegroup (re-form after retreat)',
+      'EventBus integration — EnemyGroupEvents: GroupFormationChanged(formationType), GroupRoleAssigned(enemyID, role), GroupWaveSpawned(waveIndex), GroupDefeated'
+    ] },
+    { id:'p4_boss', title:'✅ Boss Battle Framework', desc:'BossPhaseConfig · BossPhaseController · WeakPoints · BossShield · QTE system · BossPhaseUI · 8 EventBus structs · 0 errors', subs:[
+      'BossPhaseConfig SO — per-phase data: phaseName, HP threshold, abilities[], attackPatterns[], timeline reference, phaseColor for UI',
+      'BossPhaseController — state machine (4 phases), HP threshold triggers (100%→70%→40%→10%), phase transition with PlayableDirector invulnerability window',
+      'WeakPoint system — attach WeakPoint component to boss child transforms, each with HP and damage multiplier (2x), destroy triggers stagger + expose core',
+      'BossShield — temporary HP bar, regenerates if untouched for 10s, specific attacks bypass (web-yank, finisher), break triggers stun + vulnerability window',
+      'QTE system — QTE_Sequence SO with step list (input type + timing window), success/fail branching, slow-mo during QTE, perfect input bonus',
+      'BossPhaseUI — health bar with phase segments, phase color border, phase name label, shield bar, weak point indicators, phase transition banner',
+      '8 EventBus structs — BossPhaseChangedEvent, BossShieldEvent, BossShieldBreakEvent, WeakPointDestroyedEvent, QTEStartedEvent, QTEUpdateEvent, QTECompletedEvent, QTEFailedEvent'
+    ] },
+    { id:'p4_stat', title:'✅ Combat Performance Tracking', desc:'CombatPerformanceTracker (EventBus-driven) · Tracks combo/damage/kills/parry/dodge/accuracy/QTE · Save/Load bests · F3 UI overlay', subs:[
+      'CombatPerformanceTracker — MonoBehaviour, subscribes to EventBus (FreeFlowComboEvent, EnemyDiedEvent, ParryEvent, etc.), accumulates session stats',
+      'Tracked metrics — bestCombo, totalDamage, kills, parries, dodges, accuracy (hits/swings), QTEs completed, QTEs failed, missionScore, timeInCombat',
+      'Save/Load bests — per-session bests saved to SecurePlayerPrefs under "CombatBests_" key, loaded on start, compared after each engagement',
+      'F3 overlay — uGUI semi-transparent panel (top-right), toggle with F3, shows live stats (Combo: 47x, Damage: 12,340, Accuracy: 87%), auto-hide after 10s',
+      'Stat-driven rewards — accuracy >90% = +10% XP, 50+ combo = "Untouchable" title progress, perfect QTE run = bonus tokens',
+      '0 compile errors — full integration with existing combat state machine, no new dependencies'
+    ] },
+  ],
+  p5: [
+    { id:'p5_swing', title:'✅ Cinematic Swinging Upgrade', desc:'FOV burst · Dutch tilt · Speed FOV · SpeedLines · Rope tension snap · Release VFX · Ground impact shake', subs:[
+      'FOV burst — CameraController lerps FOV 60→85→60 over 0.4s on swing launch, creates sense of speed, DOTween float tween',
+      'Dutch tilt — camera roll +5° during sharp swing turns, lerps back to 0° on straight path, Cinemachine impulse on direction change',
+      'Speed FOV — sustained speed >50 m/s gradually pushes FOV 60→75 (lerp over 1s), returns when speed drops below 40 m/s',
+      'SpeedLines — VFXManager.Play(VFXID.SpeedLines) on screen edges at speed >60 m/s, particle density proportional to speed (10-50 particles)',
+      'Rope tension snap — TrailRenderer flash + AudioManager.Play(SwingHighSpeed) when rope angle > 120° at high speed, visual rope stretch VFX',
+      'Release VFX — particle burst on web release at apex, 8-particle sphere burst, slow-mo effect if at peak height (TimeManager 0.5x 0.3s)',
+      'Ground impact shake — landing from >20m triggers Cinemachine impulse (amplitude 3, frequency 1, duration 0.4s), ground dust particle ring, camera zoom out 0.2s'
+    ] },
+    { id:'p5_wall', title:'✅ Advanced Parkour & Wall Traversal', desc:'2-Phase vault · Ceiling crawl · Corner wrap · Wall-to-swing · Wall zip VFX · Zip speed lines', subs:[
+      '2-Phase vault — Phase 1 (approach): player within 2m of obstacle height < 3m triggers vault animation, Phase 2 (clear): IK hand placement on obstacle top, foot sweep over',
+      'Ceiling crawl — activate when touching ceiling surface, inverted gravity controls (W=forward relative to ceiling), 4 directional animations, limited to 5s before stamina drain',
+      'Corner wrap — when approaching wall edge at angle > 45°, player smoothly rotates 90° around corner, camera follows arc, 0.3s transition animation',
+      'Wall-to-swing — from wall-run state, pressing swing button launches player off wall at 45° angle, initial speed 25 m/s, camera Dutch tilt on transition',
+      'Wall zip VFX — VFXManager.Play(VFXID.TrailWind) along wall contact line, particle streaks follow movement direction, speed-dependent intensity',
+      'Zip speed lines — screen-edge speed lines during wall-zip >40 m/s, VFXID.SpeedLines with blue tint (wall variant vs golden for swing)'
+    ] },
+  ],
+  p6: [
+    { id:'p6_gc', title:'✅ Garbage Collection Minimization', desc:'إزالة string allocations أثناء القتال + توسيع PoolManager + Unity Addressables.', subs:[
+      'String allocation audit — replaced all $"Debug: {x}" with DC.Log() [Conditional("UNITY_EDITOR")] in hot paths (Update, combat, physics), eliminated 200+ allocations per frame',
+      'PoolManager expansion — pre-warmed pools for: Enemy_Generic (20), Projectile_Web (30), HitSpark_VFX (15), Impact_Decal (10), Gunfire_Flash (8), Death_Smoke (5), Pickup_Item (10)',
+      'Object pooling integration — VFXManager.Play(VFXID), AudioManager.Play(SoundID), CrimeSpawner, SpawnEnemyGroup all route through PoolManager.Spawn() instead of Instantiate()',
+      'Addressables setup — (architecture note: Addressables not yet active, pending P6 implementation plan) — intended for texture/audio streaming, currently using Resources.Load for critical assets',
+      'Zero-allocation combat loop — profiler confirmed 0B GC alloc in combat Update() after string audit + pooling, sustained 60 FPS on editor'
+    ] },
+    { id:'p6_stream', title:'✅ Level Streaming & Async Loading', desc:'تقسيم المدينة إلى chunks، stream ديناميكي، إزالة التأخيرات بالكامل.', subs:[
+      'City chunk division — city split into 8×8 grid (64 chunks), each chunk ~200m², loaded via SceneManager.LoadSceneAsync additive mode, distance-based load/unload',
+      'Distance-based streaming — player position determines active chunks: nearest 9 chunks loaded, next ring 16 in loading queue, outer 39 unloaded, 50m buffer zone to prevent pop-in',
+      'Async loading pattern — LoadAsync(chunkName) → allowSceneActivation=false → wait for 90% → activate when player within 60m, priority queue sorts by distance',
+      'Chunk furniture — per-chunk persistent objects (buildings, roads, terrain) always loaded, dynamic objects (NPCs, traffic, pickups) pooled per chunk activation',
+      'Zero stutter guarantee — all loads async, loading screen only on initial boot (3-5s), in-game streaming < 1ms frame impact, profiler-verified'
+    ] },
+    { id:'p6_mobile', title:'✅ Mobile Optimization Audit', desc:'هدف 30 FPS صلب: ضغط textures، تخفيض تعقيد shaders لمنصات متوسطة.', subs:[
+      'Texture compression — all textures forced to ASTC 6×6 (Android), max resolution 2048 (hero) / 1024 (NPC) / 512 (environment), mipmap chain enabled, atlas batching for UI',
+      'Shader simplification — URP Lit → URP Simple Lit on all environment objects, removed specular on NPCs, disabled subsurface scattering, shadow cascades reduced from 4→2',
+      'Draw call reduction — static batching on all buildings (batched per chunk), dynamic batching on small objects, material count reduced by combining similar materials',
+      'LOD system — 3 LOD levels per building (100%/50%/25% triangle count), LOD0 at < 50m, LOD1 at 50-150m, LOD2 at > 150m, cull at 300m',
+      'Frame rate target — QualitySettings.vSyncCount=0, Application.targetFrameRate=30, FPS counter in debug overlay, sustained 30 FPS on Snapdragon 865',
+      'Memory budget — < 512MB RAM usage (textures 200MB, meshes 80MB, audio 60MB, UI 30MB, misc 50MB), GC heap < 64MB, no out-of-memory crashes'
+    ] },
+  ],
+  p7: [
+    { id:'p7_single', title:'✅ Singleton→ServiceLocator', desc:'45 singletons register via ServiceLocator; top 5 route Instance through DI getter.', subs:[
+      'ServiceLocator registry — Bootstrap.cs (or equivalent) registers all 45 singletons in Awake(): Register<AudioManager>(instance), Register<VFXManager>(instance), etc.',
+      'Top 5 DI-routed singletons — AudioManager, VFXManager, MissionManager, SaveSystem, PoolManager: public static ClassName Instance => ServiceLocator.Get<ClassName>()',
+      'Fallback pattern — Instance getter falls back to FindObjectOfType<ClassName>() if ServiceLocator not ready (defensive), caches result after first successful resolve',
+      'Registration order — core first (ServiceLocator → SaveSystem → PoolManager), then managers (MissionManager → AudioManager → VFXManager), then UI (PanelManager), then systems',
+      'All 45 singletons migrated — every class that had private static _instance now uses ServiceLocator, zero circular dependencies, Editor-only null-check in UNITY_EDITOR'
+    ] },
+    { id:'p7_asm', title:'✅ SpiderHero.Core asmdef', desc:'Core assembly isolates foundational code (ServiceLocator, DebugController, etc.) from game code.', subs:[
+      'SpiderHero.Core.asmdef — at Assets/Scripts/Code/_Core/, name "SpiderHero.Core", no platform exclusions, references UnityEngine.CoreModule',
+      'Core assembly contents — ServiceLocator.cs, DebugController.cs, SecurePlayerPrefs.cs, CameraCache.cs, Constants.cs, DC.Log() [Conditional] extension, EventBus.cs',
+      'Assembly references — SpiderHero.Core references no game assemblies; all other asmdefs (if any) reference SpiderHero.Core',
+      'Compilation benefits — changes to ServiceLocator/DebugController no longer trigger full project recompile, incremental build ~2s vs 15s',
+      'Zero breaking changes — namespace-less classes accessible from default Assembly-CSharp via global scope, no usings changes needed'
+    ] },
+    { id:'p7_doc', title:'✅ ARCHITECTURE.md written', desc:'Comprehensive guide: structure, core systems, state machine, combat, singleton status, decisions.', subs:[
+      'ARCHITECTURE.md — 300+ lines covering: project structure (directory map), state machine architecture (V3+V4 layers), EventBus system, camera system (6 sub-systems)',
+      'Singleton migration status table — all 45 singletons listed with registration status (✅/⏳), ServiceLocator key, Instance path',
+      'Combat system documentation — V3 combat state list (35 files), combat event flow (EventBus structs), damage pipeline (Damageble→health→death→reward)',
+      'Decision log — 15 architectural decisions with rationale (why no asmdef for game code, why SecurePlayerPrefs over PlayerPrefs, why ServiceLocator over DI container)',
+      'Build & deploy guide — Android build steps, asset bundle notes, proguard rules, environment-specific configs'
+    ] },
+  ],
+  p8: [
+    { id:'p8_audio', title:'✅ Full Audio Overhaul — AudioManager + System Integration', desc:'مركز الصوت (AudioManager) + تفويض 4 أنظمة + AudioMixerController + AudioSetupWizard.', subs:[
+      'AudioManager.cs — pool 16+2, mixer routing, Play(SoundID), crossfade, ServiceLocator',
+      'SoundID enum — ~90 values covering all sound types from sounds.md',
+      'AudioMixerController.cs — runtime volume sliders → mixer exposed params',
+      'AudioSetupWizard Editor tool — batch creation & sound assignment',
+      'SFXManager.cs — 10 play methods delegate to AudioManager (backward compat)',
+      'CameraSFXReactor.cs — 6 SoundID dispatches replacing direct AudioClip fields',
+      'FootStepReceiver.cs — FootStep/Jump/Slide/ShootWeb → AudioManager delegation',
+      'BGMusicManager.cs — PlayMusic/StopMusic wrapper over AudioManager',
+      'AnimationEventHandler.cs — AudioManager fallback for FootL/FootR',
+      'PROJECT_MAP.md + ROADMAP updated — M12.39, P8.1 ✅'
+    ] },
+    { id:'p8_vfx', title:'✅ Centralized VFX System — VFXID + Pooled Placeholders', desc:'نظام VFXID مركزي + VFXManager يعيد كتابته مع PoolManager + توليد placeholders تلقائي.', subs:[
+      'VFXID enum — 35+ values covering all VFX categories from vfx.md',
+      'VFXManager refactor: VFXDefinition serializable class, Dictionary lookup, Play(VFXID) dispatch',
+      'CreatePlaceholderVFX() — runtime GameObject+ParticleSystem generation for unassigned VFXIDs',
+      'BaseAttackState.cs — PlayVFX(VFXID, pos) overloads added',
+      'VFXSetupWizard Editor tool — verify, reload, prewarm',
+      'Hand trail threshold lowered 80→60 for earlier wind trail activation',
+      'PROJECT_MAP.md + ROADMAP updated — M12.40, P8.2 ✅'
+    ] },
+    { id:'p8_access', title:'✅ Accessibility Options Suite — Colorblind + Haptic Gate + Text Scale + Subtitles', desc:'فلاتر colorblind (3 أنماط)، تكبير نص UI (0.8x–2x)، خيارات subtitle عميقة، تبديل اهتزاز يغطي 12 موقع استدعاء.', subs:[
+      'AccessibilityManager.cs — singleton with ColorBlindMode, uiTextScale, subtitle options, reducedMotion, hapticsEnabled',
+      'UserData + SaveSystem V5 — 6 new accessibility fields persisted',
+      'BaseAttackState.PlayHaptic() + 11 combat/movement files — 12 MMVibrationManager calls gated through AccessibilityManager',
+      'UITextScaler component — TMPro font size auto-scaling by uiTextScale multiplier',
+      'DialogueSystemUI.cs — subtitle toggle, text scale, speaker name toggle, background opacity',
+      'AccessibilitySetupWizard Editor tool — verify, preview colorblind, status display',
+      'PROJECT_MAP.md + ROADMAP updated — M12.41, P8.3 ✅'
+    ] },
+  ],
+};
+
+const state = { c_mgr: true, c_villain_fw: true, c_villain_intro: true, c_boss_dialog: true, c_intro: true, c_story: true, c_boss: true, c_defeat: true, c_combat: true, c_world: true, p1_test: true, p1_save: true, p1_err: true, p2_crime: true, p2_rep: true, p2_gang: true, p3_side: true, p3_secret: true, p3_rand: true, p4_ai: true, p4_boss: true, p4_stat: true, p5_swing: true, p5_wall: true, p6_gc: true, p6_stream: true, p6_mobile: true, p7_single: true, p7_asm: true, p7_doc: true, p8_audio: true, p8_vfx: true, p8_access: true, m_fw_v2: true, m_main: true, m_side: true, m_faction: true, w_m12_60: true };
+
+function buildLists() {
+  Object.keys(TASKS).forEach(sec => {
+    const el = document.getElementById('list-' + sec);
+    if (!el) return;
+    TASKS[sec].forEach(t => {
+      const done = state[t.id];
+      let subsHtml = '';
+      if (t.subs) {
+        subsHtml = '<div class="sub-list">' + t.subs.map(s => `<div class="sub-item">${s}</div>`).join('') + '</div>';
+      }
+      el.innerHTML += `<div class="task-item${done?' done':''}" onclick="toggle(this,'${t.id}')">
+        <div class="task-check">${done?'✓':''}</div>
+        <div class="task-body">
+          <div class="task-name">${t.title}</div>
+          <div class="task-desc">${t.desc}</div>
+          ${subsHtml}
+        </div>
+      </div>`;
+    });
+  });
+}
+
+function toggle(el, id) {
+  el.classList.toggle('done');
+  const done = el.classList.contains('done');
+  state[id] = done;
+  el.querySelector('.task-check').textContent = done ? '✓' : '';
+  updateStats();
+}
+
+function updateStats() {
+  let total = 0, done = 0;
+  Object.keys(TASKS).forEach(sec => {
+    TASKS[sec].forEach(t => {
+      total++;
+      if (state[t.id]) done++;
+    });
+  });
+  const historyCmpl = 85;
+  const histTotal = 81;
+  const allDone = historyCmpl + done;
+  const allTotal = histTotal + total;
+  const pct = Math.round((allDone / allTotal) * 100);
+  document.getElementById('histPct').textContent = pct + '%';
+  document.getElementById('histBar').style.width = pct + '%';
+  document.getElementById('doneCount').textContent = historyCmpl;
+  document.getElementById('futureCount').textContent = total - done;
+  const badge = document.getElementById('histBadge');
+  if (badge) badge.textContent = pct + '% مكتمل';
+}
+
+function sw(e, id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+  document.getElementById('sec-' + id).classList.add('active');
+}
+
+function openModal() {
+  const completed = [], pending = [];
+  Object.keys(TASKS).forEach(sec => {
+    TASKS[sec].forEach(t => {
+      const entry = `[${sec.toUpperCase()}] ${t.title}`;
+      if (state[t.id]) completed.push('✅ ' + entry);
+      else pending.push('⏳ ' + entry);
+    });
+  });
+  const pct = document.getElementById('histPct').textContent;
+  let txt = `Spider Hero: Rope City Wars — حالة المشروع (${pct} مكتمل)\n`;
+  txt += `Unity 6000.3.14f1 | URP 17.3.0 | Android | آخر مرحلة: M12.42 (Missions Framework V2)\n\n`;
+  txt += `=== ✅ مكتمل من PROJECT_MAP (M1→M12.44) ===\n`;
+  txt += `50+ مهمة رئيسية مكتملة شاملة: V3 Combat, AAA Camera, SpiderSense, YankDown, SwingKick, ObjectGrab, EnemyGrab, CombatFreeze, TimelineManager, CinematicDefinition, NodeCanvas AI, NPC overhaul, Combat Sandbox, GitHub (1.73GB), 85 Tests, Save System, Crash Logger, Crime Events, Dynamic World, Faction Territory, P5 Cameras, P6 GC/Streaming/Mobile, P7 Singleton/Asmdef/Docs, P8 Audio/VFX/Accessibility, Missions Framework V2\n\n`;
+  txt += `=== ⏳ Pending Tech Debt ===\nSyncV2Data() فارغ · Mission V2 needs ScriptableObject instantiation\n\n`;
+  if (completed.length) {
+    txt += `=== ✅ Future Tasks — مكتملة في الـ Roadmap ===\n`;
+    completed.forEach(c => txt += c + '\n');
+    txt += '\n';
+  }
+  txt += `=== 🎯 Future Tasks — قيد الانتظار ===\n`;
+  pending.slice(0,8).forEach(p => txt += p + '\n');
+  if (pending.length > 8) txt += `... و ${pending.length - 8} مهمة إضافية\n`;
+  txt += `\n🎯 الخطوة القادمة المقترحة:\n`;
+  const next = pending[0];
+  if (next) txt += `${next.replace('⏳ ','')}\n\nنفّذ هذه المهمة بالكامل مع احترام style المشروع (Syne + DM Sans، C# Unity 6، Animancer + DOTween).`;
+  else txt += `جميع المهام مكتملة! ما هي خطوات الـ polish القادمة؟`;
+  document.getElementById('modalText').value = txt;
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+function copyPrompt() {
+  const ta = document.getElementById('modalText');
+  ta.select();
+  document.execCommand('copy');
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function scrollTabs(val) {
+  const wrap = document.getElementById('tabsWrap');
+  if (wrap) {
+    wrap.scrollBy({ left: val, behavior: 'smooth' });
+  }
+}
+
+// COUNTDOWN TIMER LOGIC
+const targetDate = new Date("June 19, 2026 00:00:00").getTime();
+
+function updateCountdown() {
+  const now = new Date().getTime();
+  const diff = targetDate - now;
+
+  if (diff <= 0) {
+    document.getElementById("cd-days").textContent = "00";
+    document.getElementById("cd-hours").textContent = "00";
+    document.getElementById("cd-mins").textContent = "00";
+    document.getElementById("cd-secs").textContent = "00";
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+  document.getElementById("cd-days").textContent = String(days).padStart(2, '0');
+  document.getElementById("cd-hours").textContent = String(hours).padStart(2, '0');
+  document.getElementById("cd-mins").textContent = String(mins).padStart(2, '0');
+  document.getElementById("cd-secs").textContent = String(secs).padStart(2, '0');
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+buildLists();
+updateStats();
+
+// ═══════════════════════════════════════
+// TRAFFIC SYSTEM DATA & LOGIC
+// ═══════════════════════════════════════
+
+const TRAFFIC_TASKS = [
+  // ── المرحلة الأولى (Sprint الحالي) ──
+  { id:'t_events', status:'present', sprint:true, priority:'critical', cat:'التكامل',
+    title:'ربط أحداث Gley بـ EventBus',
+    desc:'TrafficVehicleCrashedEvent + TrafficVehicleActivatedEvent + TrafficVehicleDisabledEvent — ✅ مكتمل',
+    subs:['إنشاء TrafficVehicleCrashedEvent.cs في Events/ ✅', 'إضافة SubscribeToGleyEvents() في TrafficController ✅', 'إضافة UnsubscribeFromGleyEvents() في OnDestroy() ✅'] },
+  { id:'t_behaviours', status:'present', sprint:true, priority:'major', cat:'الذكاء الاصطناعي',
+    title:'تفعيل سلوكيات Gley المتقدمة',
+    desc:'Overtake عند البطء + Reverse عند الانحشار — ✅ مكتمل',
+    subs:['إنشاء TrafficBehaviourManager.cs ✅', 'مراقبة السرعة كل 2 ثانية عبر API.GetVehicleComponent() ✅', 'Overtake إذا speed < 30% لأكثر من 5 ثوانٍ ✅', 'Reverse إذا speed=0 لأكثر من 8 ثوانٍ ✅'] },
+  { id:'t_combat', status:'present', sprint:true, priority:'major', cat:'التكامل',
+    title:'استبدال تجميد المرور بـ DisableAreaWaypoints',
+    desc:'بدل إيقاف كل المرور → المركبات تتفادى منطقة القتال بشكل طبيعي — ✅ مكتمل',
+    subs:['تعديل OnCombatModeChanged في TrafficController ✅', 'API.DisableAreaWaypoints(center, 15f) عند دخول القتال ✅', 'API.EnableAllWaypoints() عند انتهاء القتال ✅'] },
+
+  // ── المرحلة الثانية ──
+  { id:'t_dummy', status:'present', sprint:true, priority:'critical', cat:'نظام المركبات',
+    title:'السائقون المرئيون — DummyDriver',
+    desc:'نظام سائقين مرئيين مع Object Pooling — ✅ مكتمل',
+    subs:['إنشاء DummyDriver.cs ✅', 'إنشاء DummyDriverSetup.cs (DriverSeat auto-calculate) ✅', 'إنشاء DummyDriverSystem.cs (singleton + Pooling 40 عنصر) ✅', 'ربط أحداث Gley (OnVehicleActivated/OnVehicleDisabled) ✅', 'إضافة TrafficDriverAssignedEvent + TrafficDriverRemovedEvent ✅', 'دمج مع TrafficController في Start() ✅', 'Auto-strip للمكونات الثقيلة (NPCController, AILerp, Rigidbody...) ✅'] },
+  { id:'t_pedestrians', status:'missing', sprint:false, priority:'critical', cat:'المشاة',
+    title:'إضافة المشاة — Gley PedestrianSystem',
+    desc:'المدينة تبدو فارغة بدون مشاة — أهم ميزة مفقودة لشعور العالم المفتوح',
+    subs:['شراء Gley PedestrianSystem أو استخدام NavMeshAgent', 'ربطه بـ TrafficController', 'PedestrianDensityManager'] },
+  { id:'t_zones', status:'missing', sprint:false, priority:'major', cat:'المشاة',
+    title:'توزيع المشاة حسب المنطقة',
+    desc:'كل حي يجب أن يكون له سكان مختلفون في المظهر والكثافة',
+    subs:['CivilianWeightObject مع Distance-weighted distribution', 'مناطق مختلفة: Financial / Industrial / Chinatown', 'ربط مع WeatherSystem (أقل مشاة بالمطر)'] },
+  { id:'t_klaxon', status:'missing', sprint:false, priority:'major', cat:'التكامل',
+    title:'صوت المنبه في الزحام',
+    desc:'المركبات تقف صامتة — يجب إصدار صوت منبه عند التوقف الطويل',
+    subs:['الاستماع لحدث OnVehicleCrashed أو بطء شديد', 'AudioManager.Play(SoundID.Klaxon) مع cooldown 3s', 'مسافة صوت محدودة (radius 15m)'] },
+  { id:'t_lights', status:'partial', sprint:false, priority:'minor', cat:'نظام المركبات',
+    title:'تفعيل أضواء الفرامل والإشارات',
+    desc:'VehicleLightsComponentV2 موجود في Gley لكن غير مفعّل',
+    subs:['API.UpdateVehicleLights(true)', 'API.SetHazardLights عند الانحشار', 'Brake lights عند الفرملة'] },
+
+  // ── المرحلة الثالثة (نظام الشرطة) ──
+  { id:'t_police_stars', status:'missing', sprint:false, priority:'critical', cat:'الشرطة',
+    title:'نظام نجوم الجريمة',
+    desc:'لا يوجد حساب علاقات → نجوم — مفقود تماماً',
+    subs:['PoliceTrafficSystem.cs مستقل عن TrafficController', 'maxStars=5, copsPerStar[]', 'AddWantedLevel(int stars)', 'CalmDownPolice() لإلغاء المطاردة'] },
+  { id:'t_police_spawn', status:'missing', sprint:false, priority:'critical', cat:'الشرطة',
+    title:'ظهور سيارات الشرطة',
+    desc:'CheckCopsSpawn مع cooldown وحد أقصى حسب عدد النجوم',
+    subs:['API.InstantiateVehicle للشرطة', 'FindPoliceSpawnPoint خارج نطاق رؤية اللاعب', 'spawnRadius=80m, despawnRadius=120m'] },
+  { id:'t_police_chase', status:'missing', sprint:false, priority:'critical', cat:'الشرطة',
+    title:'مطاردة الشرطة للاعب',
+    desc:'Autopilot.InitChase() — الشرطة تطارد اللاعب بذكاء',
+    subs:['API.SetVehicleDestination(vehicleIndex, player.position)', 'تحديث الوجهة كل ثانية', 'سلوك Follow المخصص للشرطة'] },
+
+  // ── ميزات موجودة ✅ ──
+  { id:'t_ai_drive', status:'present', sprint:false, priority:'low', cat:'الذكاء الاصطناعي',
+    title:'AI Driving — Burst-compiled DriveJob',
+    desc:'أفضل من النظام المرجعي — Burst-compiled + WheelJob متعدد الخيوط', subs:[] },
+  { id:'t_intersections', status:'present', sprint:false, priority:'low', cat:'إشارات المرور',
+    title:'4 أنواع تقاطعات',
+    desc:'TrafficLights / Priority / LightsCrossing / PriorityCrossing', subs:[] },
+  { id:'t_density', status:'present', sprint:false, priority:'low', cat:'نظام المركبات',
+    title:'كثافة ديناميكية 24 ساعة',
+    desc:'DensityCurve + SecurePlayerPrefs — أفضل من النظام المرجعي', subs:[] },
+  { id:'t_pooling', status:'present', sprint:false, priority:'low', cat:'الأداء',
+    title:'Vehicle Pooling — NativeArray + Burst',
+    desc:'نظام حوض متقدم مع ActiveCells grid culling', subs:[] },
+  { id:'t_burst', status:'present', sprint:false, priority:'low', cat:'الأداء',
+    title:'Burst Compilation — 4 Jobs',
+    desc:'النظام المرجعي لا يملكه — تفوق واضح في الأداء', subs:[] },
+  { id:'t_waypoints', status:'present', sprint:false, priority:'low', cat:'نظام العقد',
+    title:'TrafficWaypoint — 15+ خاصية',
+    desc:'neighbors[] + otherLanes[] — أفضل من النظام المرجعي', subs:[] },
+];
+
+const trafficState = {};
+TRAFFIC_TASKS.forEach(t => { trafficState[t.id] = false; });
+
+function buildTrafficList(filter) {
+  const el = document.getElementById('list-traffic');
+  el.innerHTML = '';
+  const filtered = filter === 'all' ? TRAFFIC_TASKS
+    : filter === 'sprint' ? TRAFFIC_TASKS.filter(t => t.sprint)
+    : TRAFFIC_TASKS.filter(t => t.status === filter);
+
+  const statusIcon = { present:'✅', partial:'⚠️', missing:'❌' };
+  const statusLabel = { present:'موجودة', partial:'جزئية', missing:'مفقودة' };
+  const priorityLabel = { critical:'حرجة', major:'مهمة', minor:'ثانوية', low:'—' };
+  const priorityColor = { critical:'var(--red)', major:'var(--gold)', minor:'var(--cyan)', low:'var(--muted)' };
+  const catColor = {
+    'الشرطة':'var(--red)', 'المشاة':'var(--cyan)', 'التكامل':'var(--gold)',
+    'الذكاء الاصطناعي':'#a78bfa', 'نظام المركبات':'#34d399', 'إشارات المرور':'#f472b6',
+    'الأداء':'var(--green)', 'نظام العقد':'#60a5fa'
+  };
+
+  if (filtered.length === 0) {
+    el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);font-size:0.9rem;">لا توجد مهام في هذه الفئة</div>';
+    return;
+  }
+
+  filtered.forEach(t => {
+    const checked = trafficState[t.id];
+    const subsHtml = t.subs.length ? '<div class="sub-list">' + t.subs.map(s => `<div class="sub-item">${s}</div>`).join('') + '</div>' : '';
+    const sprintBadge = t.sprint ? `<span style="font-size:0.65rem;padding:2px 7px;border-radius:4px;background:rgba(232,41,59,0.15);border:0.5px solid rgba(232,41,59,0.3);color:var(--red);font-weight:700;margin-right:6px;">🔥 Sprint</span>` : '';
+    const catBadge = `<span style="font-size:0.65rem;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,0.05);color:${catColor[t.cat]||'var(--muted)'};margin-right:4px;">${t.cat}</span>`;
+    const prioSpan = t.priority !== 'low' ? `<span style="font-size:0.72rem;color:${priorityColor[t.priority]};font-weight:500;">${priorityLabel[t.priority]}</span>` : '';
+
+    el.innerHTML += `
+      <div class="task-item${checked?' done':''}" id="titem-${t.id}" onclick="toggleTraffic('${t.id}')">
+        <div class="task-check" id="tcheck-${t.id}">${checked?'✓':''}</div>
+        <div class="task-body" style="flex:1;">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+            <span style="font-size:1rem;">${statusIcon[t.status]}</span>
+            <span class="task-name" style="flex:1;">${t.title}</span>
+            ${prioSpan}
+          </div>
+          <div style="margin-bottom:6px;">
+            ${sprintBadge}${catBadge}
+          </div>
+          <div class="task-desc">${t.desc}</div>
+          ${subsHtml}
+        </div>
+      </div>`;
+  });
+}
+
+function toggleTraffic(id) {
+  trafficState[id] = !trafficState[id];
+  const item = document.getElementById('titem-' + id);
+  const check = document.getElementById('tcheck-' + id);
+  if (trafficState[id]) { item.classList.add('done'); check.textContent = '✓'; }
+  else { item.classList.remove('done'); check.textContent = ''; }
+  updateTrafficStats();
+}
+
+function updateTrafficStats() {
+  const done = TRAFFIC_TASKS.filter(t => t.status === 'present').length;
+  const partial = TRAFFIC_TASKS.filter(t => t.status === 'partial').length;
+  const missing = TRAFFIC_TASKS.filter(t => t.status === 'missing').length;
+  const checked = Object.values(trafficState).filter(Boolean).length;
+  const total = TRAFFIC_TASKS.length;
+  const basePct = 60;
+  const boost = Math.round((checked / total) * 35);
+  const pct = Math.min(95, basePct + boost);
+
+  document.getElementById('t-done-count').textContent = done;
+  document.getElementById('t-partial-count').textContent = partial;
+  document.getElementById('t-missing-count').textContent = missing;
+  document.getElementById('t-checked-count').textContent = checked;
+  document.getElementById('traffic-pct').textContent = pct + '%';
+  document.getElementById('traffic-bar').style.width = pct + '%';
+}
+
+function filterTraffic(btn, filter) {
+  document.querySelectorAll('#traffic-filters .tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildTrafficList(filter);
+}
+
+buildTrafficList('all');
+updateTrafficStats();
+</script>
+</body>
+</html>
